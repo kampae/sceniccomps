@@ -19,8 +19,8 @@ def makeNet():
     if os.path.isfile(caffe_root + 'models/placesCNN_upgraded/places205CNN_iter_300000_upgraded.caffemodel'):
         print 'CaffeNet found.'
 
-    #caffe.set_device(0)     # if we have multiple GPUs, pick the first one     
-    caffe.set_mode_cpu()    # could also be cpu()
+    caffe.set_device(0)     # if we have multiple GPUs, pick the first one     
+    caffe.set_mode_gpu()    # could also be cpu()
 
     model_def = caffe_root + 'models/placesCNN_upgraded/places205CNN_deploy_upgraded.prototxt'
     model_weights = caffe_root + 'models/placesCNN_upgraded/places205CNN_iter_300000_upgraded.caffemodel'
