@@ -29,7 +29,7 @@ def get_carleton_streetview():
         fileName = "HHPkwy" + heading + ".jpg"
         image = urlretrieve(urlstring, fileName)
         all_images.append(image)
-
+        
     return all_images
 
 ## http://stackoverflow.com/questions/30227466/combine-several-images-horizontally-with-python
