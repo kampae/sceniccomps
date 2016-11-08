@@ -3,8 +3,11 @@
 <script>
 var geocoder;
   var map;
-	var final_coords = [];
-	var output = [];
+var strt = "hi";
+var ends = "bye";
+var max_time = 0;
+//	var final_coords = [];
+//	var output = [];
 	
   function initialize() {
     geocoder = new google.maps.Geocoder();
@@ -17,34 +20,42 @@ var geocoder;
   }
 
   function codeStartAddress() {
-    var start_address = document.getElementById('start_address').value;
-    geocoder.geocode( { 'address': start_address}, function(results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-		map.setZoom(8);
-		  document.getElementById("coords").innerHTML = results[0].geometry.location;
-		  final_coords[0] = results[0].geometry.location;
-		  document.getElementById("coords_in_arr").innerHTML = final_coords[0];
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location,
+      var start_address = document.getElementById('start_address').value;
+      var start_result;
+      geocoder.geocode( { 'address': start_address}, function(results, status) {
+          if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            map.setZoom(8);
+            start_result= results[0].geometry.location;
+            document.getElementById("startCoord").innerHTML = "inside codeStart " + results[0].geometry.location;
+            var inner_result = results[0].geometry.location;
+              //document.getElementById("coords_in_arr").innerHTML = inner_result;
+              all_output(inner_result);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+
         });
+          
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
+          //return inner_result;
     });
-	
-	codeEndAddress();
+      strt = start_result;
+    //return start_result;
+//	codeEndAddress(final_coords);
   }  
 	
 	function codeEndAddress() {
-    var end_address = document.getElementById('end_address').value;
-    geocoder.geocode( { 'address': end_address}, function(results, status) {
+        var end_address = document.getElementById('end_address').value;
+        var end_result;
+        geocoder.geocode( { 'address': end_address}, function(results, status) {
       if (status == 'OK') {
-        //map.setCenter(results[0].geometry.location);
-		  document.getElementById("coords").innerHTML += results[0].geometry.location;
-		  final_coords[1] = results[0].geometry.location;
-		  document.getElementById("coords_in_arr").innerHTML += final_coords[1];
+          end_result = results[0].geometry.location;
+		  document.getElementById("endCoord").innerHTML = "inside codeEnd " + results[0].geometry.location;
+		  var inner_r  = results[0].geometry.location;
+          next_output(inner_r);
         var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
@@ -53,19 +64,55 @@ var geocoder;
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-		
-	setOutput();
+
+    //return end_result;
+//	setOutput(final_coords);
   }
+    
+   
 	
 	function setOutput() {
-		var max_time = document.getElementById('max_travel_time').value;
-		
-		output[0] = final_coords;
-		output[1] = max_time;
-		document.getElementById("output").innerHTML = final_coords;
-	}
+        var output = [];
+        var final_coords = [];
+        
+        codeStartAddress();
+        codeEndAddress();
+//        final_coords[0] = document.getElementById("startCoord").innerHTML;
+//        //alert("FINAL COORDS[0]: " + final_coords[0]);
+//        final_coords[1] = document.getElementById("endCoord").innerHTML;
+//        
+////        final_coords[0] = codeStartAddress();
+//        // document.getElementById("output").innerHTML = "Final Coords[0]: " + strt;
+////        final_coords[1] = codeEndAddress();
+//		var max_time = document.getElementById('max_travel_time').value;
+//		
+//		output[0] = final_coords;
+//		output[1] = max_time;
+        
+//        document.getElementById("output").innerHTML = "length: " + final_coords.length + typeof final_coords[0];
 
-	
+	}
+    
+    
+    function all_output(start) {
+        strt = start;
+       
+    }
+    
+    function next_output(end) {
+        ends = end;
+        max_time = document.getElementById('max_travel_time').value;
+    }
+    
+	 function return_things() {
+        document.getElementById("output").innerHTML = "got here " + strt + " " + ends + " " + max_time; 
+        pass_on = []
+        pass_on[0] = strt;
+        pass_on[1] = end;
+        pass_on[2] = max_time;
+        return pass_on;
+
+    }
 
 </script>
 	
@@ -143,10 +190,14 @@ var geocoder;
     <input id="max_travel_time" type="textbox">
 	<p></p>
 	
-	<input type="button" value="Find My Route!" onclick="codeStartAddress()">
+	<input type="button" value="Find My Route!" onclick="setOutput()">
+    <input type="button" value="Output!" onclick="return_things()">
 <!--    <input type="button" value="Encode End" onclick="codeEndAddress()">-->
   </div>
 	
+    <div id="startCoord"></div>
+    <div id="endCoord"></div>
+    
 	<div id="coords"> </div>
 	<div id="coords_in_arr"></div>
 	<div id="output"></div>
