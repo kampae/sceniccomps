@@ -1,0 +1,205 @@
+/a/abbey 0,sightseeing
+/a/airport_terminal 1,non-scenic
+/a/alley 2,non-scenic
+/a/amphitheater 3,sightseeing
+/a/amusement_park 4,sightseeing
+/a/aquarium 5,sightseeing
+/a/aqueduct 6,sightseeing
+/a/arch 7,sightseeing
+/a/art_gallery 8,non-scenic
+/a/art_studio 9,non-scenic
+/a/assembly_line 10,non-scenic
+/a/attic 11,non-scenic
+/a/auditorium 12,non-scenic
+/a/apartment_building/outdoor 13,non-scenic
+/b/badlands 14,nature and woods
+/b/ballroom 15,non-scenic
+/b/bamboo_forest 16,nature and woods
+/b/banquet_hall 17,non-scenic
+/b/bar 18,non-scenic
+/b/baseball_field 19,fields
+/b/basement 20,non-scenic
+/b/basilica 21,sightseeing
+/b/bayou 22,water
+/b/beauty_salon 23,non-scenic
+/b/bedroom 24,non-scenic
+/b/boardwalk 25,non-scenic
+/b/boat_deck 26,non-scenic
+/b/bookstore 27,non-scenic
+/b/botanical_garden 28,nature and woods
+/b/bowling_alley 29,non-scenic
+/b/boxing_ring 30,non-scenic
+/b/bridge 31,non-scenic
+/b/building_facade 32,non-scenic
+/b/bus_interior 33,non-scenic
+/b/butchers_shop 34,non-scenic
+/b/butte 35,mountain
+/b/bakery/shop 36,non-scenic
+/c/cafeteria 37,non-scenic
+/c/campsite 38,non-scenic
+/c/candy_store 39,non-scenic
+/c/canyon 40,nature and woods
+/c/castle 41,sightseeing
+/c/cemetery 42,non-scenic
+/c/chalet 43,non-scenic
+/c/classroom 44,non-scenic
+/c/closet 45,non-scenic
+/c/clothing_store 46,non-scenic
+/c/coast 47,water
+/c/cockpit 48,non-scenic
+/c/coffee_shop 49,non-scenic
+/c/conference_center 50,non-scenic
+/c/conference_room 51,non-scenic
+/c/construction_site 52,non-scenic
+/c/corn_field 53,fields
+/c/corridor 54,non-scenic
+/c/cottage_garden 55,nature and woods
+/c/courthouse 56,non-scenic
+/c/courtyard 57,non-scenic
+/c/creek 58,water
+/c/crevasse 59,nature and woods
+/c/crosswalk 60,non-scenic
+/c/cathedral/outdoor 61,sightseeing
+/c/church/outdoor 62,sightseeing
+/d/dam 63,sightseeing
+/d/dining_room 64,non-scenic
+/d/dock 65,non-scenic
+/d/dorm_room 66,non-scenic
+/d/driveway 67,non-scenic
+/d/desert/sand 68,nature and woods
+/d/desert/vegetation 69,nature and woods
+/d/dinette/home 70,non-scenic
+/d/doorway/outdoor 71,non-scenic
+/e/engine_room 72,non-scenic
+/e/excavation 73,non-scenic
+/f/fairway 74,non-scenic
+/f/fire_escape 75,non-scenic
+/f/fire_station 76,non-scenic
+/f/food_court 77,non-scenic
+/f/forest_path 78,nature and woods
+/f/forest_road 79,nature and woods
+/f/formal_garden 80,nature and woods
+/f/fountain 81,sightseeing
+/f/field/cultivated 82,fields
+/f/field/wild 83,fields
+/g/galley 84,non-scenic
+/g/game_room 85,non-scenic
+/g/garbage_dump 86,non-scenic
+/g/gas_station 87,non-scenic
+/g/gift_shop 88,non-scenic
+/g/golf_course 89,fields
+/h/harbor 90,water
+/h/herb_garden 91,nature and woods
+/h/highway 92,non-scenic
+/h/home_office 93,non-scenic
+/h/hospital 94,non-scenic
+/h/hospital_room 95,non-scenic
+/h/hot_spring 96,water
+/h/hotel_room 97,non-scenic
+/h/hotel/outdoor 98,non-scenic
+/i/ice_cream_parlor 99,non-scenic
+/i/iceberg 100,water
+/i/igloo 101,sightseeing
+/i/islet 102,water
+/i/ice_skating_rink/outdoor 103,sightseeing
+/i/inn/outdoor 104,non-scenic
+/j/jail_cell 105,non-scenic
+/k/kasbah 106,sightseeing
+/k/kindergarden_classroom 107,non-scenic
+/k/kitchen 108,non-scenic
+/k/kitchenette 109,non-scenic
+/l/laundromat 110,non-scenic
+/l/lighthouse 111,sightseeing
+/l/living_room 112,non-scenic
+/l/lobby 113,non-scenic
+/l/locker_room 114,non-scenic
+/m/mansion 115,non-scenic
+/m/marsh 116,water
+/m/martial_arts_gym 117,non-scenic
+/m/mausoleum 118,non-scenic
+/m/medina 119,sightseeing
+/m/motel 120,non-scenic
+/m/mountain 121,mountain
+/m/mountain_snowy 122,mountain
+/m/music_studio 123,non-scenic
+/m/market/outdoor 124,sightseeing
+/m/monastery/outdoor 125,sightseeing
+/m/museum/indoor 126,non-scenic
+/n/nursery 127,non-scenic
+/o/ocean 128,water
+/o/office 129,non-scenic
+/o/office_building 130,non-scenic
+/o/orchard 131,nature and woods
+/p/pagoda 132,sightseeing
+/p/palace 133,sightseeing
+/p/pantry 134,non-scenic
+/p/parking_lot 135,non-scenic
+/p/parlor 136,non-scenic
+/p/pasture 137,fields
+/p/patio 138,non-scenic
+/p/pavilion 139,non-scenic
+/p/phone_booth 140,non-scenic
+/p/picnic_area 141,non-scenic
+/p/playground 142,non-scenic
+/p/plaza 143,non-scenic
+/p/pond 144,water
+/p/pulpit 145,non-scenic
+/r/racecourse 146,non-scenic
+/r/raft 147,non-scenic
+/r/railroad_track 148,non-scenic
+/r/rainforest 149,nature and woods
+/r/reception 150,non-scenic
+/r/residential_neighborhood 151,non-scenic
+/r/restaurant 152,non-scenic
+/r/restaurant_kitchen 153,non-scenic
+/r/restaurant_patio 154,non-scenic
+/r/rice_paddy 155,fields
+/r/river 156,water
+/r/rock_arch 157,sightseeing
+/r/rope_bridge 158,sightseeing
+/r/ruin 159,sightseeing
+/r/runway 160,non-scenic
+/s/sandbar 161,water
+/s/schoolhouse 162,non-scenic
+/s/sea_cliff 163,water
+/s/shed 164,non-scenic
+/s/shoe_shop 165,non-scenic
+/s/shopfront 166,non-scenic
+/s/shower 167,water
+/s/ski_resort 168,non-scenic
+/s/ski_slope 169,mountain
+/s/sky 170,non-scenic
+/s/skyscraper 171,non-scenic
+/s/slum 172,non-scenic
+/s/snowfield 173,mountain
+/s/staircase 174,non-scenic
+/s/supermarket 175,non-scenic
+/s/swamp 176,nature and woods
+/s/stadium/baseball 177,non-scenic
+/s/stadium/football 178,non-scenic
+/s/stage/indoor 179,non-scenic
+/s/subway_station/platform 180,non-scenic
+/s/swimming_pool/outdoor 181,non-scenic
+/t/television_studio 182,non-scenic
+/t/topiary_garden 183,nature and woods
+/t/tower 184,non-scenic
+/t/train_railway 185,non-scenic
+/t/tree_farm 186,nature and woods
+/t/trench 187,non-scenic
+/t/temple/east_asia 188,sightseeing
+/t/temple/south_asia 189,sightseeing
+/t/track/outdoor 190,non-scenic
+/t/train_station/platform 191,non-scenic
+/u/underwater/coral_reef 192,water
+/v/valley 193,nature and woods
+/v/vegetable_garden 194,nature and woods
+/v/veranda 195,non-scenic
+/v/viaduct 196,sightseeing
+/v/volcano 197,mountain
+/w/waiting_room 198,non-scenic
+/w/water_tower 199,non-scenic
+/w/watering_hole 200,water
+/w/wheat_field 201,fields
+/w/wind_farm 202,fields
+/w/windmill 203,sightseeing
+/y/yard 204,fields

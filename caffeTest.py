@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import csv
 
 #%matplotlib inline
 plt.rcParams['figure.figsize'] = (10,10)
@@ -19,8 +20,8 @@ def makeNet():
     if os.path.isfile(caffe_root + 'models/placesCNN_upgraded/places205CNN_iter_300000_upgraded.caffemodel'):
         print 'CaffeNet found.'
 
-    #caffe.set_device(0)     # if we have multiple GPUs, pick the first one     
-    caffe.set_mode_cpu()    # could also be cpu()
+    caffe.set_device(0)     # if we have multiple GPUs, pick the first one     
+    caffe.set_mode_gpu()    # could also be cpu()
 
     model_def = caffe_root + 'models/placesCNN_upgraded/places205CNN_deploy_upgraded.prototxt'
     model_weights = caffe_root + 'models/placesCNN_upgraded/places205CNN_iter_300000_upgraded.caffemodel'
@@ -54,6 +55,12 @@ def makeTransformer(net, mu):
     
     
 def classify(net, image, transformer):
+    mydict = {}
+    with open('categories.csv', mode='r') as infile:
+        reader = csv.reader(infile)
+        for rows in reader:
+            mydict[rows[0]] = rows[1]
+            
     #image = caffe.io.load_image(caffe_root + 'examples/stitchtest.jpg') #Specify image, can be url (with more code) or image from folder
     transformed_image = transformer.preprocess('data', image)
     plt.show(image)
@@ -75,19 +82,21 @@ def classify(net, image, transformer):
 
     labels = np.loadtxt(labels_file, str, delimiter='\t')
 
-    print 'output label:', labels[output_prob.argmax()]
+    print 'output label:', mydict[labels[output_prob.argmax()]]
 
     # sort top five predictions from softmax output
     top_inds = output_prob.argsort()[::-1][:5]  # reverse sort and take five largest items
     
     #print 'top inds[0]: ', top_inds[0]
-
+    
+    
     print 'probabilities and labels:'
     
     for classId in top_inds:
-        print output_prob[classId], labels[classId]
+        print output_prob[classId], mydict[labels[classId]]
     
     #zip(output_prob[top_inds], labels[top_inds])
+
 
 if __name__ == "__main__":
 
