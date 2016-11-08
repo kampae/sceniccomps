@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<script>
+var geocoder;
+  var map;
+	var final_coords = [];
+	var output = [];
+	
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(36.788797, -26.802564);
+    var mapOptions = {
+      zoom: 3,
+      center: latlng
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  }
+
+  function codeStartAddress() {
+    var start_address = document.getElementById('start_address').value;
+    geocoder.geocode( { 'address': start_address}, function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+		map.setZoom(8);
+		  document.getElementById("coords").innerHTML = results[0].geometry.location;
+		  final_coords[0] = results[0].geometry.location;
+		  document.getElementById("coords_in_arr").innerHTML = final_coords[0];
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+	
+	codeEndAddress();
+  }  
+	
+	function codeEndAddress() {
+    var end_address = document.getElementById('end_address').value;
+    geocoder.geocode( { 'address': end_address}, function(results, status) {
+      if (status == 'OK') {
+        //map.setCenter(results[0].geometry.location);
+		  document.getElementById("coords").innerHTML += results[0].geometry.location;
+		  final_coords[1] = results[0].geometry.location;
+		  document.getElementById("coords_in_arr").innerHTML += final_coords[1];
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+		
+	setOutput();
+  }
+	
+	function setOutput() {
+		var max_time = document.getElementById('max_travel_time').value;
+		
+		output[0] = final_coords;
+		output[1] = max_time;
+		document.getElementById("output").innerHTML = final_coords;
+	}
+
+	
+
+</script>
+	
+	
+<style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  #map {
+	height: 100%;
+	width: 100%
+  }
+  /* Optional: Makes the sample page fill the window. */
+  html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+  }
+  #floating-panel {
+	position: absolute;
+/*	top: 10px;*/
+	top: 40%;
+	left: 40%;
+	z-index: 5;
+	background-color: #fff;
+	padding: 5px;
+	border: 1px solid #999;
+	text-align: center;
+	font-family: 'Roboto','sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+  }  
+	#title {
+	position: absolute;
+	top: 25%;
+/*	top: 45%;*/
+	left: 31%;
+	z-index: 5;
+/*	background-color: #fff;*/
+	padding: 5px;
+/*	border: 1px solid #999;*/
+	text-align: center;
+	font-family: 'Roboto','sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+  }
+</style>
+	
+<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNRPbOk4MXjARQvx_cRXkcq-J2oSbB2ZE&callback=initMap">
+</script>
+
+<body onload="initialize()">
+<div id="map"></div>
+<!-- <div id="map" style="width: 1000px; height: 700px;"></div>-->
+  <div id="title">
+	  <font size="6">Welcome To Scenic Route Finder</font>
+	  </div>
+	
+	<div id="floating-panel">
+	Please enter your start address
+	<p></p>
+    <input id="start_address" type="textbox">
+<!--    <input type="button" value="Encode Start" onclick="codeStartAddress()">-->
+<!--
+  </div>
+	 <div id="end-panel">
+-->
+	<p></p>
+	Please enter your end address
+	<p></p>
+    <input id="end_address" type="textbox">
+	<p></p>
+	What is your maximum travel time?
+	<p></p>
+    <input id="max_travel_time" type="textbox">
+	<p></p>
+	
+	<input type="button" value="Find My Route!" onclick="codeStartAddress()">
+<!--    <input type="button" value="Encode End" onclick="codeEndAddress()">-->
+  </div>
+	
+	<div id="coords"> </div>
+	<div id="coords_in_arr"></div>
+	<div id="output"></div>
+</body>
+</html>

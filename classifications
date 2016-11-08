@@ -1,0 +1,94 @@
+pano 1:
+0.275946 /b/butte 35
+0.152311 /v/valley 193
+0.127044 /m/mountain 121
+0.0922793 /f/forest_path 78
+0.0698298 /f/forest_road 79
+
+*pic 1:
+0.207583 /v/valley 193
+0.138098 /m/mountain 121
+0.113211 /f/field/wild 83
+0.109618 /b/butte 35
+0.0553193 /f/field/cultivated 82
+
+*pano 2:
+0.25455 /m/mountain 121
+0.186848 /b/butte 35
+0.165417 /v/volcano 197
+0.109115 /v/valley 193
+0.0771472 /c/canyon 40
+
+pic 2 (pic not accurate):
+0.232709 /s/sea_cliff 163
+0.163635 /v/volcano 197
+0.116848 /c/coast 47
+0.108053 /m/mountain 121
+0.0804856 /v/valley 193
+
+pano 3:
+0.416822 /i/islet 102
+0.162491 /c/coast 47
+0.144301 /s/sea_cliff 163
+0.0890622 /o/ocean 128
+0.0311293 /m/mountain 121
+
+*pic 3:
+0.336381 /h/harbor 90
+0.240775 /c/coast 47
+0.0770596 /s/sea_cliff 163
+0.0737572 /o/ocean 128
+0.0692154 /i/islet 102
+
+pano 4:
+0.285804 /m/mountain 121
+0.254043 /v/valley 193
+0.118824 /b/butte 35
+0.101744 /v/volcano 197
+0.0382389 /f/field/wild 83
+
+*pic 4:
+0.29256 /m/mountain 121
+0.141424 /v/valley 193
+0.106262 /v/volcano 197
+0.0773911 /s/slum 172
+0.0422728 /b/butte 35
+
+pano 5:
+0.16257 /p/pond 144
+0.13531 /v/valley 193
+0.111074 /m/mountain 121
+0.0864109 /c/creek 58
+0.0849407 /r/river 156
+
+pic 5:
+0.233741 /v/volcano 197
+0.180155 /i/iceberg 100
+0.0577716 /w/watering_hole 200
+0.0564754 /c/crevasse 59
+0.0433821 /p/pond 144
+
+Carl Pano:
+0.273362 /d/driveway 67
+0.0870623 /b/botanical_garden 28
+0.0832143 /f/forest_road 79
+0.0557622 /f/formal_garden 80
+0.043045 /o/orchard 131
+Image 0:
+0.551477 /h/highway 92
+0.262961 /f/forest_road 79
+0.0393927 /d/driveway 67
+0.0360082 /r/residential_neighborhood 151
+0.0230618 /c/crosswalk 60
+120:
+0.26063 /p/parking_lot 135
+0.228477 /h/highway 92
+0.153997 /c/crosswalk 60
+0.105452 /f/forest_road 79
+0.0413647 /d/driveway 67
+240:
+0.136127 /d/driveway 67
+0.117041 /r/residential_neighborhood 151
+0.0812575 /c/courtyard 57
+0.0726527 /p/plaza 143
+0.0638999 /p/parking_lot 135

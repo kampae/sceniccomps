@@ -93,7 +93,7 @@ def classify(net, image, transformer):
     print 'probabilities and labels:'
     
     for classId in top_inds:
-        print output_prob[classId], mydict[labels[classId]]
+        print output_prob[classId], labels[classId]
     
     #zip(output_prob[top_inds], labels[top_inds])
 
