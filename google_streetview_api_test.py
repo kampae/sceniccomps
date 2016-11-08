@@ -12,7 +12,7 @@ def get_carleton_streetview():
         for i in range(0,5):
             heading = str(i*10)
             pitch = str(j*10)
-            urlstring = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=1+North+College+Street,+Northfield,+MN+55057&heading=' + heading + '&pitch=' + pitch + '&key=' + apiKey
+            urlstring = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=44.4614,+93.1561&heading=' + heading + '&pitch=' + pitch + '&key=' + apiKey
             fileName = "CarletonImage" + heading + "," + pitch + ".jpg"
             image = urlretrieve(urlstring, fileName)
             all_images.append(image)
