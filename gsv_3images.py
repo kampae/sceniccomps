@@ -18,7 +18,7 @@ def get_streetview(coords):
         heading = str(120 * i)
     
         urlstring = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + lat + ',' + lng + '&fov=120&heading=' + heading + '&key=' + apiKey   
-        fileName = "Pic" + heading + lat + lng + ".jpg"
+        fileName = "Pic" + str(i) + ".jpg"
         image = urllib.urlretrieve(urlstring, fileName)
         #print("FileName: " + fileName)
         all_images.append(fileName)
