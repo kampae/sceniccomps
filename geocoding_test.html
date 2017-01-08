@@ -36,13 +36,14 @@ var max_time = 0;
                 position: results[0].geometry.location,
 
         });
-          
+              
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
           //return inner_result;
     });
-      strt = start_result;
+      //strt = start_result;
+      //alert(strt);
     //return start_result;
 //	codeEndAddress(final_coords);
   }  
@@ -65,6 +66,8 @@ var max_time = 0;
       }
     });
 
+        //ends = end_result;
+        //alert(ends);
     //return end_result;
 //	setOutput(final_coords);
   }
@@ -77,6 +80,10 @@ var max_time = 0;
         
         codeStartAddress();
         codeEndAddress();
+//        all_output(strt);
+//        next_output(ends);
+        callsReturnThings();
+
 //        final_coords[0] = document.getElementById("startCoord").innerHTML;
 //        //alert("FINAL COORDS[0]: " + final_coords[0]);
 //        final_coords[1] = document.getElementById("endCoord").innerHTML;
@@ -93,6 +100,7 @@ var max_time = 0;
 
 	}
     
+
     
     function all_output(start) {
         strt = start;
@@ -105,14 +113,19 @@ var max_time = 0;
     }
     
 	 function return_things() {
-        document.getElementById("output").innerHTML = "got here " + strt + " " + ends + " " + max_time; 
+        document.getElementById("output").innerHTML = "got here " + strt + " " + ends + " " + max_time;
+        final_coords = []
+        final_coords[0] = strt;
+        final_coords[1] = ends;
         pass_on = []
-        pass_on[0] = strt;
-        pass_on[1] = end;
-        pass_on[2] = max_time;
+        pass_on[0] = final_coords;
+        pass_on[1] = max_time;
+//        pass_on[2] = max_time;
+//         document.getElementById("output").innerHTML += "coords in arr: " + pass_on[0] + " " + "max_time in arr: " + pass_on[1];
         return pass_on;
 
     }
+    
 
 </script>
 	
@@ -179,6 +192,11 @@ var max_time = 0;
 <!--
   </div>
 	 <div id="end-panel">
+-->
+<!--
+    <form action="/read_input_test.py" method="post">
+        
+        </form>
 -->
 	<p></p>
 	Please enter your end address
