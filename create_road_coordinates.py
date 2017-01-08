@@ -13,18 +13,19 @@ import googlemaps
 def reverse_geo(coordinates):
     output_list = []
     for n in coordinates:
-        gmaps = googlemaps.Client(key='AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g')
+        gmaps = googlemaps.Client(key='AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw')
         reverse_geocode_result = gmaps.reverse_geocode(n)
-        output_list.append([reverse_geocode_result[0].get('geometry').get('location').get("lat"), reverse_geocode_result[0].get('geometry').get('location').get("lng")])
+        if(len(reverse_geocode_result)>0):
+            output_list.append([reverse_geocode_result[0].get('geometry').get('location').get("lat"), reverse_geocode_result[0].get('geometry').get('location').get("lng")])
     return output_list
 
 if __name__ == '__main__':
     #read in file
-    with open('test.csv', 'r') as f:
+    with open('daypart1.csv', 'r') as f:
          coord_list = f.read().splitlines()
     coor_list = reverse_geo(coord_list)
     #write to file
-    file = open('test_output', 'w')
+    file = open('output_part1', 'w')
     for item in coor_list:
         file.write("%s\n" % item)
     f.close() 
