@@ -42,30 +42,31 @@
                       
                       //{lat: 41.273877, lng: -86.058145},{lat: 47.753731, lng: -125.359647}, {lat: 41.273877, lng: -85.058145}];
         //[{lat: 47.753731, lng: -125.359647}] //js_coords.coords; //
+        
+    }
+function createList() {
         var coords = [41.273877, -86.058145];
         //getClosestRoad(coords);
-        
+        alert(coor_list.length);
         var road_coords = [];
-        for (i = 0; i < coor_list.length; i+=2)
+        for (i = 0; i < 50; i+=2)
             {
-                //trying to use timers to delay it, but it isn't working
-                setTimeout( function(i) {
-                    var coordinate = {lat: coor_list[i], lng: coor_list[i+1]};
+                var coordinate = {lat: coor_list[i], lng: coor_list[i+1]};
                     getClosestRoad(coordinate);
-                    alert(i)
-                }, 100, i);
-                //alert(road_coord);
                 //road_coords.push(road_coord);
             }
-        setTimeout( function(roads_list) {
-            var write_test = roads_list[0];
-            //alert(roads_list.length);
-            for(i=1; i<roads_list.length; i++) {
-                write_test+="\n" + roads_list[i];
-            }
-            window.open('data:text/csv;charset=utf-8,' + escape(write_test));
-        }, 1000, roads_list);
+            
       }
+
+function writeToFile() {
+    var write_test = roads_list[0];
+    //alert(roads_list.length);
+
+    for(i=1; i<roads_list.length; i++) {
+        write_test+="\n" + roads_list[i];
+        }
+     window.open('data:text/csv;charset=utf-8,' + escape(write_test));
+}
     
   
     // Function: 
@@ -87,8 +88,8 @@
             }
             if (status == google.maps.DirectionsStatus.OK) {
                 var point=response.routes[0].legs[0];
-                marker.setOptions({map:map, position:point.start_location});
-                map.setCenter(point.start_location);
+               // marker.setOptions({map:map, position:point.start_location});
+                //map.setCenter(point.start_location);
                
                 var road = point.start_location.toString();
                 
