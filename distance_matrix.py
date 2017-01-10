@@ -1,12 +1,12 @@
 import sys
 import simplejson
-import urllib
-from urllib2 import urlopen
+from urllib.request import urlopen
+#from urllib2 import urlopen
 import os
 from geopy.distance import vincenty
-import gsv_3images
-import caffe_3images
-import caffe_gsv_3images
+#import gsv_3images
+#import caffe_3images
+#import caffe_gsv_3images
 
 
 def get_distances_slow(coordinates, final, matrix):
@@ -48,7 +48,7 @@ def get_distances(coordinates, final, matrix):
             urlstring = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + start + '&destinations=' + destinations + '&mode=driving&key=' + apiKey
             result = simplejson.load(urlopen(urlstring))
             for k in range(0, len(result['rows'][0].get("elements"))):
-                #resultString = result['rows'][0].get("elements")[k].get('duration').get('text')
+                resultString = result['rows'][0].get("elements")[k].get('duration').get('text')
                 resultString = resultString + " " + (result['rows'][0].get("elements")[k].get('distance').get('text'))
                 matrix[i][destination_list[k]] = resultString
     return matrix
