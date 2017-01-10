@@ -15,7 +15,8 @@ import googlemaps
 def directions(coordinates):
     output_list = []
     for n in coordinates:
-        gmaps = googlemaps.Client(key='AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac')
+        gmaps = googlemaps.Client(key='AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw')
+        #account 1 api key AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac
         routes = gmaps.directions(n, n, mode="driving")
         if(len(routes)>0):
             output_coords = [routes[0].get('legs')[0].get("start_location").get('lat'), routes[0].get('legs')[0].get("start_location").get('lng')]
@@ -30,8 +31,10 @@ if __name__ == '__main__':
          coord_list = f.read().splitlines()
     coor_list = directions(coord_list)
     #write to file
-    file = open('output1', 'w')
+    file = open('output2', 'w')
     for item in coor_list:
-        file.write("%s\n" % item)
+        file.write("%s\n" % item[0] + ", " + item[1])
     f.close() 
+
+    # print(directions(["48.850079, -124.667307623"]))
 

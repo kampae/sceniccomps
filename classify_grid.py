@@ -5,9 +5,7 @@ import os
 
 
 def get_classifications(coords):
-    # list to hold top classification for each point
-    classifications = []
-
+    file = open("classified_points.csv", "w")
     # set up caffe net 
     net, mu = caffe_3images.makeNet()
     transformer, net = caffe_3images.makeTransformer(net, mu)
@@ -25,29 +23,26 @@ def get_classifications(coords):
             #print("Image I am trying to classify: ", image)
             classification = caffe_3images.classify(net, image, transformer)
         
-            three_classifications.append([classification, latlng])
-
-        top_prob = 0
-        top_class = ""
-    
-        # find top probability 
-        for classification in three_classifications:
-            if classification[0][1] > top_prob:
-                top_class = classification[0][0]
-    
-        classifications.append([top_class, classification[1]]) 
+            three_classifications.append(classification)
+        
+        three_classifications = sorted(three_classifications, key=lambda classification: classification[1], reverse=True)
+        
+        three_classifications.insert(0, latlng)
+        file.write("%s\n" % three_classifications)
         
         os.remove("Pic0.jpg")
         os.remove("Pic1.jpg")
         os.remove("Pic2.jpg")
+    
+    file.close()
         
-    for classi in classifications:
-        print(classi)
-    return classifications 
-
 if __name__ == "__main__":
     # sample coordinate list
-    #coords = [[44.461193, -93.155638]]
-    coords = [[44.5101349, -93.14554699999997]] #create_grid_coords.return_grid_coords()
+    #coords = [["44.5101349, -93.14554699999997"]] 
+    
+    coords = []
+    with open('output1') as inputfile:
+        for line in inputfile:
+            coords.append([line.strip()])
     
     get_classifications(coords)
