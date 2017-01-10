@@ -10,16 +10,7 @@ import googlemaps
 #convert the original coordinates to nearby road coordinates
 #this is suing python3
 
-def reverse_geo(coordinates):
-    output_list = []
-    for n in coordinates:
-        gmaps = googlemaps.Client(key='AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac')
-        reverse_geocode_result = gmaps.reverse_geocode(n)
-        if(len(reverse_geocode_result)>0):
-            output_coords = [reverse_geocode_result[0].get('geometry').get('location').get("lat"), reverse_geocode_result[0].get('geometry').get('location').get("lng")]
-            if output_coords not in output_list:
-                output_list.append(output_coords)
-    return output_list
+
 
 def directions(coordinates):
     output_list = []
@@ -32,16 +23,6 @@ def directions(coordinates):
                 output_list.append(output_coords)
     return output_list
 
-def snap_to_road(coordinates):
-    output_list = []
-    for n in coordinates:
-        gmaps = googlemaps.Client(key='AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g')
-        road_location = gmaps.snap_to_roads(n)
-        if(len(road_location)>0):
-            output_coords = road_location[0].get("location")
-            if output_coords not in output_list:
-                output_list.append(output_coords)
-    return output_list
 
 if __name__ == '__main__':
     #read in file
