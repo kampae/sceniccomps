@@ -38,7 +38,6 @@ def get_classifications(coords):
         
 if __name__ == "__main__":
     # sample coordinate list
-    #coords = [[44.461193, -93.155638]]
-    coords = [[44.5101349, -93.14554699999997]] #create_grid_coords.return_grid_coords()
+    coords = [[44.5101349, -93.14554699999997]] 
     
     get_classifications(coords)
