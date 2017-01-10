@@ -38,6 +38,11 @@ def get_classifications(coords):
         
 if __name__ == "__main__":
     # sample coordinate list
-    coords = [[44.5101349, -93.14554699999997]] 
+    #coords = [["44.5101349, -93.14554699999997"]] 
+    
+    coords = []
+    with open('output1') as inputfile:
+        for line in inputfile:
+            coords.append([line.strip()])
     
     get_classifications(coords)
