@@ -10,7 +10,7 @@ import googlemaps
 #convert the original coordinates to nearby road coordinates
 #this is suing python3
 # Phoebe's API key: AIzaSyBEQ0xXnvLUr_tA3qSvk62XKjsLtpZKLyw
-
+# Emily's API key: AIzaSyCS4cJEpYt-1u6xRkJmqsiBKV1LHnYB0Mg
 
 def directions(coordinates):
     output_list = []
