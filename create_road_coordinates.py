@@ -36,3 +36,5 @@ if __name__ == '__main__':
         file.write("%s\n" % item[0] + ", " + item[1])
     f.close() 
 
+    # print(directions(["48.850079, -124.667307623"]))
+
