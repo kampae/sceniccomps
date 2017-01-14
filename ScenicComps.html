@@ -26,6 +26,29 @@
         <input id="end_input" class="locations" type="text" placeholder="End Location">
     </div>
     </div>
+    
+    <div id="timescenery">
+        <div id="time">
+            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99">               Hours
+            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59">
+            Minutes
+        </div>
+        
+        <div id="scenery">
+            <select id = "scenery_select">
+                <option value="">Select Scenery</option>
+                <option value="Mountains">Mountains</option>
+                <option value="Water">Water</option>
+                <option value="Trees">Trees</option>
+                <option value="Emily">Emily</option>
+                <option value="Non-Scenic">Non-Scenic</option>
+            </select>
+        </div>
+    </div>
+    
+    <div id = "button" onclick="getInputs()">
+        <button id="go">Get My Route</button>
+    </div>
 </div>
 
 </body>
