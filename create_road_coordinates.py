@@ -11,12 +11,13 @@ import googlemaps
 #this is suing python3
 # Phoebe's API key: AIzaSyBEQ0xXnvLUr_tA3qSvk62XKjsLtpZKLyw
 # Emily's API key: AIzaSyCS4cJEpYt-1u6xRkJmqsiBKV1LHnYB0Mg
-
-def directions(coordinates):
+# Allie API key 1: AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac
+# Allie API key 2: AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw
+# Allie API key 3: AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g
+def directions(coordinates, api_key):
     output_list = []
     for n in coordinates:
-        gmaps = googlemaps.Client(key='AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac')
-        #account 1 api key AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw 
+        gmaps = googlemaps.Client(key=api_key)
         routes = gmaps.directions(n, n, mode="driving")
         if(len(routes)>0):
             output_coords = [routes[0].get('legs')[0].get("start_location").get('lat'), routes[0].get('legs')[0].get("start_location").get('lng')]
@@ -27,15 +28,25 @@ def directions(coordinates):
 
 if __name__ == '__main__':
     #read in file
-    with open('test.csv', 'r') as f:
+    with open('outputFileNum100800', 'r') as f:
          coord_list = f.read().splitlines()
-         print(coord_list)
-    coor_list = directions(coord_list)
+    coor_list = directions(coord_list, 'AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g')
     #write to file
-    file = open('output2', 'w')
+    file = open('roadFile100800', 'w')
     for item in coor_list:
-        file.write("%s\n" % item[0] + ", " + item[1])
-    f.close() 
+        r = str(item[0]) + ", " + str(item[1])
+        file.write("%s\n" % r)
+    f.close()
+
+    # with open('outputFileNum100800', 'r') as fi:
+    #      coord_list = fi.read().splitlines()
+    # coor_list = directions(coord_list, 'AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw')
+    # #write to file
+    # file1 = open('roadFile100800', 'w')
+    # for item in coor_list:
+    #     r = str(item[0]) + ", " + str(item[1])
+    #     file1.write("%s\n" % r)
+    # fi.close() 
 
     # print(directions(["48.850079, -124.667307623"]))
 
