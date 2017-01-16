@@ -1,7 +1,12 @@
 import sys
+<<<<<<< HEAD
 import simplejson
 #from urllib.request import urlopen
 from urllib2 import urlopen
+=======
+#import simplejson
+from urllib.request import urlopen
+>>>>>>> 133b13dd1f709f0318876a43c46eebf5d30c4df0
 import os
 import googlemaps
 #you need to do pip install -U googlemaps to get the python google maps client 
@@ -11,11 +16,13 @@ import googlemaps
 #convert the original coordinates to nearby road coordinates
 #this is suing python3
 # Phoebe's API key: AIzaSyBEQ0xXnvLUr_tA3qSvk62XKjsLtpZKLyw
+# Phoebe's API key 2: AIzaSyB1eAbxLePfsBKeszxFtc3g4wRNwnWwuzA
 # Emily's API key: AIzaSyCS4cJEpYt-1u6xRkJmqsiBKV1LHnYB0Mg
 # Allie API key 1: AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac
 # Allie API key 2: AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw
 # Allie API key 3: AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g
 # Evie's API key: AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24
+
 def directions(coordinates):
     output_list = []
     file = open('roadFile21600', 'w')
@@ -36,6 +43,11 @@ if __name__ == '__main__':
     with open('outputFileNum21600', 'r') as f:
          coord_list = f.read().splitlines()
     coor_list = directions(coord_list)        
+    #write to file
+    file = open('roadFile16800', 'w')
+    for item in coor_list:
+        r = str(item[0]) + ", " + str(item[1])
+        file.write("%s\n" % r)
     f.close()
 
     # with open('outputFileNum100800', 'r') as fi:
