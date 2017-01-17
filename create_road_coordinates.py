@@ -34,11 +34,11 @@ def directions(coordinates):
 
 if __name__ == '__main__':
     #read in file
-    with open('outputFileNum33600', 'r') as f:
+    with open('outputFileNum50400', 'r') as f:
          coord_list = f.read().splitlines()
     coor_list = directions(coord_list)        
     #write to file
-    file = open('roadFile33600', 'w')
+    file = open('roadFile50400', 'w')
     for item in coor_list:
         r = str(item[0]) + ", " + str(item[1])
         file.write("%s\n" % r)
