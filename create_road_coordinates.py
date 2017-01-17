@@ -1,12 +1,6 @@
 import sys
-<<<<<<< HEAD
-import simplejson
-#from urllib.request import urlopen
-from urllib2 import urlopen
-=======
 #import simplejson
 from urllib.request import urlopen
->>>>>>> 133b13dd1f709f0318876a43c46eebf5d30c4df0
 import os
 import googlemaps
 #you need to do pip install -U googlemaps to get the python google maps client 
@@ -25,7 +19,7 @@ import googlemaps
 
 def directions(coordinates):
     output_list = []
-    file = open('roadFile21600', 'w')
+    #file = open('roadFile21600', 'w')
     for n in coordinates:
         gmaps = googlemaps.Client(key='AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24')
         routes = gmaps.directions(n, n, mode="driving")
@@ -35,30 +29,16 @@ def directions(coordinates):
                 output_list.append(output_coords)
                 r = str(output_coords[0]) + ", " + str(output_coords[1])
                 file.write("%s\n" % r)
+                #r = str(output_coords[0]) + ", " + str(output_coords[1])
+                #file.write("%s\n" % r)
     return output_list
 
 
 if __name__ == '__main__':
     #read in file
-    with open('outputFileNum21600', 'r') as f:
+    with open('outputFileNum16800', 'r') as f:
          coord_list = f.read().splitlines()
-    coor_list = directions(coord_list)        
+    #test_list = ['48.715079, -120.308558422']
+    coor_list = directions(coord_list)
     #write to file
-    file = open('roadFile16800', 'w')
-    for item in coor_list:
-        r = str(item[0]) + ", " + str(item[1])
-        file.write("%s\n" % r)
-    f.close()
-
-    # with open('outputFileNum100800', 'r') as fi:
-    #      coord_list = fi.read().splitlines()
-    # coor_list = directions(coord_list, 'AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw')
-    # #write to file
-    # file1 = open('roadFile100800', 'w')
-    # for item in coor_list:
-    #     r = str(item[0]) + ", " + str(item[1])
-    #     file1.write("%s\n" % r)
-    # fi.close() 
-
-    # print(directions(["48.850079, -124.667307623"]))
-
+    f.close() 
