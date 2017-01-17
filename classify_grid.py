@@ -5,7 +5,7 @@ import os
 
 
 def get_classifications(coords):
-    file = open("classified_points7200.csv", "w")
+    file = open("classified_points100800.csv", "w")
     # set up caffe net 
     net, mu = caffe_3images.makeNet()
     transformer, net = caffe_3images.makeTransformer(net, mu)
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     #coords = [["44.5101349, -93.14554699999997"]] 
     
     coords = []
-    with open('roadFile7200') as inputfile:
+    with open('roadFile100800') as inputfile:
         for line in inputfile:
             coords.append([line.strip()])
     
