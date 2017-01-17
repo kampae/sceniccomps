@@ -1,5 +1,5 @@
 import sys
-import simplejson
+#import simplejson
 from urllib.request import urlopen
 import os
 import googlemaps
@@ -10,15 +10,18 @@ import googlemaps
 #convert the original coordinates to nearby road coordinates
 #this is suing python3
 # Phoebe's API key: AIzaSyBEQ0xXnvLUr_tA3qSvk62XKjsLtpZKLyw
+# Phoebe's API key 2: AIzaSyB1eAbxLePfsBKeszxFtc3g4wRNwnWwuzA
 # Emily's API key: AIzaSyCS4cJEpYt-1u6xRkJmqsiBKV1LHnYB0Mg
 # Allie API key 1: AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac
 # Allie API key 2: AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw
 # Allie API key 3: AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g
+# Evie's API key: AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24
+
 def directions(coordinates):
     output_list = []
-    file = open('roadFile16800', 'w')
+    #file = open('roadFile21600', 'w')
     for n in coordinates:
-        gmaps = googlemaps.Client(key='AIzaSyB1eAbxLePfsBKeszxFtc3g4wRNwnWwuzA')
+        gmaps = googlemaps.Client(key='AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24')
         routes = gmaps.directions(n, n, mode="driving")
         if(len(routes)>0):
             output_coords = [routes[0].get('legs')[0].get("start_location").get('lat'), routes[0].get('legs')[0].get("start_location").get('lng')]
@@ -26,6 +29,8 @@ def directions(coordinates):
                 output_list.append(output_coords)
                 r = str(output_coords[0]) + ", " + str(output_coords[1])
                 file.write("%s\n" % r)
+                #r = str(output_coords[0]) + ", " + str(output_coords[1])
+                #file.write("%s\n" % r)
     return output_list
 
 
@@ -37,6 +42,3 @@ if __name__ == '__main__':
     coor_list = directions(coord_list)
     #write to file
     f.close() 
-
-    # print(directions(["48.850079, -124.667307623"]))
-
