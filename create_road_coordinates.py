@@ -1,5 +1,5 @@
 import sys
-import simplejson
+#import simplejson
 from urllib.request import urlopen
 import os
 import googlemaps
@@ -10,14 +10,15 @@ import googlemaps
 #convert the original coordinates to nearby road coordinates
 #this is suing python3
 # Phoebe's API key: AIzaSyBEQ0xXnvLUr_tA3qSvk62XKjsLtpZKLyw
+# Phoebe's API key 2: AIzaSyB1eAbxLePfsBKeszxFtc3g4wRNwnWwuzA
 # Emily's API key: AIzaSyCS4cJEpYt-1u6xRkJmqsiBKV1LHnYB0Mg
 # Allie API key 1: AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac
 # Allie API key 2: AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw
 # Allie API key 3: AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g
-def directions(coordinates, api_key):
+def directions(coordinates):
     output_list = []
     for n in coordinates:
-        gmaps = googlemaps.Client(key=api_key)
+        gmaps = googlemaps.Client(key='AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw')
         routes = gmaps.directions(n, n, mode="driving")
         if(len(routes)>0):
             output_coords = [routes[0].get('legs')[0].get("start_location").get('lat'), routes[0].get('legs')[0].get("start_location").get('lng')]
@@ -28,11 +29,11 @@ def directions(coordinates, api_key):
 
 if __name__ == '__main__':
     #read in file
-    with open('outputFileNum100800', 'r') as f:
+    with open('outputFileNum16800', 'r') as f:
          coord_list = f.read().splitlines()
-    coor_list = directions(coord_list, 'AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g')
+    coor_list = directions(coord_list)
     #write to file
-    file = open('roadFile100800', 'w')
+    file = open('roadFile16800', 'w')
     for item in coor_list:
         r = str(item[0]) + ", " + str(item[1])
         file.write("%s\n" % r)
