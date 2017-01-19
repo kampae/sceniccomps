@@ -13,19 +13,9 @@ displayRoute(directionsService, directionsDisplay);
 
 function displayRoute(directionsService, directionsDisplay) {
 var waypts = [{location: {lat: 47.619869, lng: -119.459762},stopover: true}, {location: {lat: 47.646012,lng: -119.358825}, stopover: true}];
-//var checkboxArray = document.getElementById('waypoints');
-//for (var i = 0; i < checkboxArray.length; i++) {
-//  if (checkboxArray.options[i].selected) {
-//    waypts.push({
-//      location: checkboxArray[i].value,
-//      stopover: true
-//    });
-//  }
-//}
+
 
 directionsService.route({
-//  origin: document.getElementById('start').value,
-//  destination: document.getElementById('end').value,
   origin: {lat: 47.607140, lng: -119.653053},
   destination: {lat: 47.683360, lng: -119.128378},
   waypoints: waypts,
