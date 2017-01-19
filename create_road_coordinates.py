@@ -19,7 +19,7 @@ import googlemaps
 
 def directions(coordinates):
     output_list = []
-    file = open('roadFile67200', 'w')
+    file = open('roadFile84000', 'w')
     for n in coordinates:
         gmaps = googlemaps.Client(key='AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24')
         routes = gmaps.directions(n, n, mode="driving")
@@ -36,7 +36,7 @@ def directions(coordinates):
 
 if __name__ == '__main__':
     #read in file
-    with open('outputFileNum67200', 'r') as f:
+    with open('outputFileNum84000', 'r') as f:
          coord_list = f.read().splitlines()
     #test_list = ['48.715079, -120.308558422']
     coor_list = directions(coord_list)
