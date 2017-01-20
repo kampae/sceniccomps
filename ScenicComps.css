@@ -1,72 +1,65 @@
 html {
-  background: url(scenicRoad.jpg); /** no-repeat center center fixed;
-  /**-webkit-background-size: 100%; /**cover;**/
-  /**-moz-background-size: 100%; /**cover;**/
-  /**-o-background-size: 100%; /**cover;**/
-  /**background-size: 100%; /**cover;**/
-  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    background: url(scenicRoad.jpg) no-repeat center center fixed;
+    -webkit-background-size: 100%; 
 }
 
 h1 {
-  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  font-size: 2.7em;
-  margin-top: 15%;
-  margin-bottom: 25px;
-  color: white;
-  text-align: center
+    margin-top: 10%;
+    color: white;
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 0px;
 }
 
 h2 {
-  color: rgb(200,200,200);
-  font-size: 25px;
-  text-align: center;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 10px;
 }
 
-#box {
+#box{
+    width: 500px;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
-    height: 50%;
-    /**border: 3px solid black;**/
-    padding: 10px;
-
-    height: 50%; /**230px;**/
-    display: -webkit-flex;
-    display:         flex;
-    -webkit-align-items: center;
-              align-items: center;
-    -webkit-justify-content: left;
-          justify-content: left;
-    margin-top: 50%; /**30px;**/
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50%; /**150px;**/
-/*
-    min-width: 300px;
-    max-width: 400px;
-*/
-    padding: 25px;
-    border-radius: 2em;
-    /*color: rgb(240,240,240);
-    background-color: black;   rgba(200, 200, 200, 0.35)*/
 }
 
 .locations {
-    width = 500px;
-    height = 20px;
+    width: 500px;
+    height: 20px;
+    margin-top: 40px;
 }
 
-#startend {
+#timescenery {
+    margin-top: 40px;
+    color: white;
+}
+
+#time {
     float: left;
-    clear: none;
 }
 
-.loc_box {    
-  height: 150px;
-  display: -webkit-flex;
-  display:         flex;
-  -webkit-align-items: center;
-          align-items: center;
+#timescenery {
+    height: 20px;
 }
 
+#scenery {
+    float: right;
+}
 
+#scenery_select {
+    height: 30px;
+    width: 200px;
+}
+
+#button {
+    margin-top: 50px;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#go {
+    height: 30px;  
+    width: 150px;
+}
