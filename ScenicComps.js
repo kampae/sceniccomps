@@ -8,21 +8,12 @@ function initAutocomplete()
 }
 
 function getInputs()
-{
-    /**var geocoded_start = new XMLHttpRequest();          
-    geocoded_start.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCPn6VnGvKDcPjjnq9utmKMwVxPv0gln5w", false);
-    geocoded_start.send(); 
-    
-    var startCoords = [];
-    startCoords.push(geocoded_start["results"["geometry"["location"["lat"]]]]);    
-    startCoords.push(geocoded_start["results"["geometry"["location"["lng"]]]]); **/
-    
+{   
     var startAddress = document.getElementById("start_input").value;
     
     var endAddress = document.getElementById("end_input").value;
     
     var maxTime = + document.getElementById("hours_input").value * 60 + + document.getElementById("minutes_input").value;
-    //maxTime += document.getElementById("minutes_input").value;
     
     var scenery = document.getElementById("scenery_select").value;
     
@@ -30,6 +21,9 @@ function getInputs()
     
     // deal with invalid inputs
     
-    alert(inputs);
+    document.location.href = 'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
+        
+        //'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
+    
     return inputs;
 }
