@@ -78,6 +78,20 @@ def get_scenic_coordinates(coords, scenery):
             coordinates.append(item[1])
     return coordinates
 
+def read_classified_points(file_name, scenery_type):
+    classified_coord_list = []
+    with open(file_name, 'r') as f:
+        input_lines = f.read().splitlines()
+    for x in input_lines:
+        new_line = x.replace("[", "")
+        new_line = new_line.replace("]", "")
+        new_line = new_line.replace(",", "")
+        new_line = new_line.replace('\'', "")
+        line_list = new_line.split()
+        if(line_list[2] == scenery_type or line_list[4] == scenery_type or line_list[6]==scenery_type):
+            coordinates = [float(line_list[0]), float(line_list[1])]
+            classified_coord_list.append(coordinates)
+    return classified_coord_list
 
 def route_ilp(dist, coord_names, max_dist):
 
@@ -108,27 +122,43 @@ def route_ilp(dist, coord_names, max_dist):
 
     # Solve
     mod.solve()
+    edge_list = []
     for t in dist:
         if(y[t].value() == 1):
-            print(t)
+            edge_list.append(t)
+    return edge_list
+
+def order_output(output_list, start, end):
+    ordered_output = []
+    while(start != end):
+        for x in output_list:
+            if(x[0] == start):
+                ordered_output.append(x[0])
+                start = x[1]
+    ordered_output.append(start)
+    return ordered_output
 
 if __name__ == '__main__':
-    start = '49.7016339,-123.1558121' #vancouver
-    end = '36.1699412,-115.1398296' #las vegas
+    #start = '49.7016339,-123.1558121' #vancouver
+    #end = '36.1699412,-115.1398296' #las vegas
+    start = '48.62995890000001, -124.7537899'
+    end = '48.7062475, -124.7531533'
     #end = '47.6062095,-122.3320708' #seattle
     # vancouver, seattle, sanFran, spokane, portland, bend, las vegas
-    coordinates = [[49.7016339,-123.1558121], [47.6062095,-122.3320708], [37.7749295,-122.4194155], [47.6587802, -117.4260466], [45.5230622, -122.6764816], [44.0581728,-121.3153096], [36.1699412,-115.1398296]]
+    #coordinates = [[49.7016339,-123.1558121], [47.6062095,-122.3320708], [37.7749295,-122.4194155], [47.6587802, -117.4260466], [45.5230622, -122.6764816], [44.0581728,-121.3153096], [36.1699412,-115.1398296]]
    #vancouver, richmond, burnaby, delta
     #coordinates = [[49.7016339,-123.1558121], [49.185992, -123.097537], [49.220953, -123.00881], [49.134848, -123.032913]] 
+    coordinates = read_classified_points("testFile.csv", "non-scenic")
     w, h = len(coordinates), len(coordinates) 
     distances = {}
     matrix = [[0 for x in range(w)] for y in range(h)]
     dist_dictionary, names_list = get_distances(coordinates, end, distances)
     #print(dist_dictionary)
-    max_distance = 2500000
+    max_distance = 25000
     #print(names_list)
-    route_ilp(dist_dictionary, names_list, max_distance)
-    getCrowDistance(coordinates)
+    output_list = route_ilp(dist_dictionary, names_list, max_distance)
+    print(order_output(output_list, start, end))
+    #getCrowDistance(coordinates)
     #print(result['rows'][0].get("elements")[k].get('duration').get('value'))
     #matrix[i][destination_list[k]] = result['rows'][0].get("elements")[k].get('duration').get('value')
 
