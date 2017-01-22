@@ -32,3 +32,15 @@ function getInputs()
     
     return inputs;
 }
+
+
+
+function onFindRoute()
+{
+    var inputs = getInputs();
+    var url = 'http://localhost:5000/map/';
+    xmlHttpRequest = new XMLHttpRequest();
+    xmlHttpRequest.open('get', url);
+    
+    xmlHttpRequest.send(null);
+}

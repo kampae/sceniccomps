@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
-
+    
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPn6VnGvKDcPjjnq9utmKMwVxPv0gln5w&libraries=places&callback=initAutocomplete" async defer></script>
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Scenic Comps</title>
   <link rel="stylesheet" type = "text/css" href="/static/ScenicComps.css"/>
+<!--  <link rel="stylesheet" href="ScenicComps.css"/>-->
 </head>
     
 <body>
@@ -14,7 +17,9 @@
     <h1>Scenic Comps</h1>
 </div>
 <h2><i>Enjoy the Ride!</i></h2>
-
+ 
+ 
+    
 <div id="box">
     <div id = "startend">
     <div id="start" class="loc_box">
@@ -45,9 +50,10 @@
     </div>
     
     <div id = "button">
-        <button id="go" onclick="getInputs()">Get My Route</button>
+        <button id="go" onclick="onFindRoute()">Get My Route</button>
     </div>
 </div>
+
 
 </body>
 </html>
