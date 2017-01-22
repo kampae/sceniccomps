@@ -12,32 +12,27 @@ displayRoute(directionsService, directionsDisplay);
 }
 
 function displayRoute(directionsService, directionsDisplay) {
-var waypts = [{location: {lat: 47.619869, lng: -119.459762},stopover: true}, {location: {lat: 47.646012,lng: -119.358825}, stopover: true}];
+    var coords = [[47.607140, -119.653053], [47.619869, -119.459762], [47.646012, -119.358825], [47.683360, -119.128378]];
+    var waypts = [];
+    for (var i = 1; i < coords.length - 1; i++)
+    {
+        wayPoint = {"location" : {"lat" : coords[i][0], "lng": coords[i][1]}, "stopover": true};
+        waypts.push(wayPoint);
+    }
 
 
-directionsService.route({
-  origin: {lat: 47.607140, lng: -119.653053},
-  destination: {lat: 47.683360, lng: -119.128378},
-  waypoints: waypts,
-  optimizeWaypoints: true,
-  travelMode: 'DRIVING'
-}, function(response, status) {
-  if (status === 'OK') {
-    directionsDisplay.setDirections(response);
-    var route = response.routes[0];
-//    var summaryPanel = document.getElementById('directions-panel');
-//    summaryPanel.innerHTML = '';
-    // For each route, display summary information.
-//    for (var i = 0; i < route.legs.length; i++) {
-//      var routeSegment = i + 1;
-//      summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-//          '</b><br>';
-//      summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-//      summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-//      summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-//    }
-  } else {
-    window.alert('Directions request failed due to ' + status);
-  }
+    directionsService.route({
+      origin: {lat: coords[0][0], lng: coords[0][1]},
+      destination: {lat: coords[coords.length - 1][0], lng: coords[coords.length - 1][1]},
+      waypoints: waypts,
+      optimizeWaypoints: true,
+      travelMode: 'DRIVING'
+    }, function(response, status) {
+      if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+        var route = response.routes[0];
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
 });
 }

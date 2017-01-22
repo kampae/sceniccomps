@@ -21,8 +21,8 @@ function getInputs()
     
     var endAddress = document.getElementById("end_input").value;
     
-    var maxTime = document.getElementById("hours_input").value * 60;
-    maxTime += document.getElementById("minutes_input").value;
+    var maxTime = + document.getElementById("hours_input").value * 60 + + document.getElementById("minutes_input").value;
+    //maxTime += document.getElementById("minutes_input").value;
     
     var scenery = document.getElementById("scenery_select").value;
     
@@ -30,5 +30,6 @@ function getInputs()
     
     // deal with invalid inputs
     
+    alert(inputs);
     return inputs;
 }
