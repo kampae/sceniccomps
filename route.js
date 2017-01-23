@@ -1,14 +1,13 @@
 function initMap() {
-var directionsService = new google.maps.DirectionsService;
-var directionsDisplay = new google.maps.DirectionsRenderer;
-var map = new google.maps.Map(document.getElementById('map'), {
-  zoom: 7,
-  center: {lat: 47.53, lng: -119.36}
-});
-directionsDisplay.setMap(map);
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 7,
+      center: {lat: 47.53, lng: -119.36}
+    });
+    directionsDisplay.setMap(map);
 
-displayRoute(directionsService, directionsDisplay);
-    
+    displayRoute(directionsService, directionsDisplay);    
 }
 
 function displayRoute(directionsService, directionsDisplay) {
@@ -20,6 +19,7 @@ function displayRoute(directionsService, directionsDisplay) {
         waypts.push(wayPoint);
     }
 
+    directionsDisplay.setPanel(document.getElementById('directions'));
 
     directionsService.route({
       origin: {lat: coords[0][0], lng: coords[0][1]},

@@ -21,9 +21,9 @@ function getInputs()
     
     // deal with invalid inputs
     
-    document.location.href = 'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
+    document.location.href = 'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
         
-        //'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
+        //'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
     
     return inputs;
 }
