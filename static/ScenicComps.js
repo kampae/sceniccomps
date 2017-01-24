@@ -32,6 +32,11 @@ function getInputs()
         
         //'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
     alert(inputs);
+
+//    document.location.href = 'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
+        
+        //'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
+    
     return inputs;
 }
 
