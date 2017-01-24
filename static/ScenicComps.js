@@ -21,10 +21,17 @@ function getInputs()
     
     // deal with invalid inputs
     
-    document.location.href = 'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
+//    document.location.href = 'http://localhost:5000/route/'; 
+//        + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
+    
+    var url = 'http://localhost:5000/route/'; //'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
+    
+    xmlHttpRequest = new XMLHttpRequest();
+    xmlHttpRequest.open('get', url);
+    xmlHttpRequest.send(null);
         
         //'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
-    
+    alert(inputs);
     return inputs;
 }
 

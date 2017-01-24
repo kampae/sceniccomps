@@ -2,10 +2,11 @@ import gsv_3images
 import caffe_3images
 import create_grid_coords
 import os
+import sys
 
 
 def get_classifications(coords):
-    file = open("classified_points40800.csv", "w")
+    file = open("classified_points55200.csv", "w")
     # set up caffe net 
     net, mu = caffe_3images.makeNet()
     transformer, net = caffe_3images.makeTransformer(net, mu)
@@ -40,9 +41,15 @@ if __name__ == "__main__":
     # sample coordinate list
     #coords = [["44.5101349, -93.14554699999997"]] 
     
+#    arguments = sys.argv
+#    inputFile = arguments[1]
+#    outputFile = arguments[2]
+    
     coords = []
-    with open('roadFile40800') as inputfile:
+    with open('roadFile55200') as inputfile:
         for line in inputfile:
             coords.append([line.strip()])
     
     get_classifications(coords)
+    
+    #HAD ERROR WHEN TRYING TO RUN roadFile52800!! so not all its points were classified

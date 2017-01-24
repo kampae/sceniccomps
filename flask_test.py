@@ -17,11 +17,10 @@ def get_main_page():
 def second_page(inputs):
     return json.dumps(inputs)
 
-@app.route("/<start>/<end>/<time>/<scenery>/")
-def route_display(start, end, time, scenery):
+@app.route("/route/")    #<start>/<end>/<time>/<scenery>/")
+def route_display(): #(start, end, time, scenery):
     # code here to generate route
-    # pass coordinates to route.js
-    
+    # pass coordinates to route.js 
     return flask.render_template('route.html')
 
 @app.route('/map/')
