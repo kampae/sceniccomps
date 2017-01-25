@@ -1,0 +1,27 @@
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #map {
+    height: 100%;
+}
+
+
+#directions{
+
+    /* Controls panel compactness */
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+    
+    height: 100%;
+    float: right;
+    width: 390px;
+    overflow: auto;
+}
+  
+#directions select {
+    width: 100%;
+}

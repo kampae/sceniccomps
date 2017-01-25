@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPn6VnGvKDcPjjnq9utmKMwVxPv0gln5w&libraries=places&callback=initAutocomplete" async defer></script>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Scenic Comps</title>
+  <link rel="stylesheet" type = "text/css" href="/static/ScenicComps.css"/>
+<!--  <link rel="stylesheet" href="ScenicComps.css"/>-->
+</head>
+    
+<body>
+<script type="text/javascript" src="{{ url_for('static', filename='ScenicComps.js') }}"></script>
+<!--    <script src="ScenicComps.js"></script>-->
+<div class="header">
+    <h1>Scenic Comps</h1>
+</div>
+<h2><i>Enjoy the Ride!</i></h2>
+ 
+ 
+    
+<div id="box">
+    <div id = "startend">
+    <div id="start" class="loc_box">
+        <input id="start_input" class="locations" type="text" placeholder="Start Location">
+    </div>
+    <div id="end" class="loc_box">
+        <input id="end_input" class="locations" type="text" placeholder="End Location">
+    </div>
+    </div>
+    
+    <div id="timescenery">
+        <div id="time">
+            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99">               Hours
+            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59">
+            Minutes
+        </div>
+        
+        <div id="scenery">
+            <select id = "scenery_select">
+                <option value="">Select Scenery</option>
+                <option value="Mountains">Mountains</option>
+                <option value="Water">Water</option>
+                <option value="Trees">Trees</option>
+                <option value="Emily">Emily</option>
+                <option value="Non-Scenic">Non-Scenic</option>
+            </select>
+        </div>
+    </div>
+    
+    <div id = "button">
+        <button id="go" onclick="onFindRoute()">Get My Route</button>
+    </div>
+</div>
+
+
+</body>
+</html>
