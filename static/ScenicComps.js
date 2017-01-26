@@ -24,20 +24,33 @@ function getInputs()
 //    document.location.href = 'http://localhost:5000/route/'; 
 //        + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
     
-    var url = 'http://localhost:5000/route/'; //'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
+    var url = 'route/'; //'http://localhost:5000/' + startAddress + "/" + //endAddress + "/" + maxTime + "/" + scenery + "/";
     
     xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.open('get', url);
-    xmlHttpRequest.send(null);
+    
+    xmlHttpRequest.onreadystatechange = function()
+    {
+        if (xmlHttpRequest.readyState == 4 && xmlHttpRequest == 200)
+            {
+                getInputsCallback(xmlHttpRequest.responseText);
+            }
+    };
+    xmlHttpRequest.send();
         
         //'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
-    alert(inputs);
+    //alert(inputs);
 
 //    document.location.href = 'file:///Users/evierosenberg/Desktop/Comps/sceniccomps/route.html';
         
         //'http://localhost:5000/' + startAddress + "/" + endAddress + "/" + maxTime + "/" + scenery + "/";
     
     return inputs;
+}
+
+function getInputsCallback(responseText)
+{
+    
 }
 
 

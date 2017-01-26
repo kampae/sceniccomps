@@ -1,11 +1,12 @@
 import flask
 import json
-from flask import Flask, jsonify, render_template
-from flask.ext.googlemaps import GoogleMaps
+from flask import Flask, jsonify, render_template, request, session
+from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
+import os
 
 app = flask.Flask(__name__, static_folder='static', template_folder='templates')
-
+app.config['SECRET_KEY'] = 'F33459345**&4D';
 app.config['GOOGLEMAPS_KEY'] = 'AIzaSyAZzeHhs-8JZ7i18MjFuM35dJHq70n3Hx4'
 GoogleMaps(app, key='AIzaSyAZzeHhs-8JZ7i18MjFuM35dJHq70n3Hx4')
 
@@ -21,28 +22,22 @@ def second_page(inputs):
 def route_display(): #(start, end, time, scenery):
     # code here to generate route
     # pass coordinates to route.js 
+#    if request.method == 'GET':
     return flask.render_template('route.html')
 
-@app.route('/map/')
+@app.route('/view_map', methods=['POST'])
 def view_map():
-    mymap = Map(
-        identifier="fullmap",
-        varname="mymap",
-        style=(
-            "height:100%;"
-            "width:100%;"
-            "top:0;"
-            "left:0;"
-            "position:absolute;"
-            "z-index:200;"
-        ),
-        lat = 37.4419,
-        lng = -122.1419,
-        markers=[(37.4419, -122.1419)]
-    )
+    startpoint = request.form['startpoint']
+    endpoint = request.form['endpoint']
+    scenery = request.form['scenery']
+    hours = request.form['hours']
+    minutes = request.form['minutes']
+    waypoints = ['47.626925']
+    return flask.render_template('route.html', startpoint=waypoints, endpoint=endpoint)
     
-    return flask.render_template('map.html', mymap=mymap)
-    #return jsonify(mymap.as_json())
+    
+def test(startpoint):
+    return '47.626925'
 
 if __name__ == "__main__":
     
