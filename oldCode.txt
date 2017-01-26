@@ -1,0 +1,19 @@
+#    mymap = Map(
+#        identifier="fullmap",
+#        varname="mymap",
+#        style=(
+#            "height:100%;"
+#            "width:100%;"
+#            "top:0;"
+#            "left:0;"
+#            "position:absolute;"
+#            "z-index:200;"
+#        ),
+#        #47.626925, -122.317704
+#        lat = startpoint, #37.4419,
+#        lng = endpoint, #-122.1419,
+#        markers=[(37.4419, -122.1419)]
+#    )
+
+#return flask.render_template('map.html', mymap=mymap)
+    #return jsonify(mymap.as_json())

@@ -20,40 +20,43 @@
 <h2><i>Enjoy the Ride!</i></h2>
  
  
-    
+ {% block content %}
+    <form id = "userInputs" method="post" action="{{ url_for('view_map') }}">
 <div id="box">
     <div id = "startend">
     <div id="start" class="loc_box">
-        <input id="start_input" class="locations" type="text" placeholder="Start Location">
+        <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' required></p>
     </div>
-    <div id="end" class="loc_box">
-        <input id="end_input" class="locations" type="text" placeholder="End Location">
+        <div id="end" class="loc_box">
+        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint'></p>
     </div>
     </div>
-    
     <div id="timescenery">
         <div id="time">
-            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99">               Hours
-            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59">
+            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours">               Hours
+            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes">
             Minutes
         </div>
         
         <div id="scenery">
-            <select id = "scenery_select">
+            <p><select id = "scenery_select" name='scenery'>
                 <option value="">Select Scenery</option>
                 <option value="Mountains">Mountains</option>
                 <option value="Water">Water</option>
                 <option value="Trees">Trees</option>
                 <option value="Emily">Emily</option>
                 <option value="Non-Scenic">Non-Scenic</option>
-            </select>
+            </select></p>
         </div>
     </div>
     
     <div id = "button">
-        <button id="go" onclick="onFindRoute()">Get My Route</button>
+        <button id="go" onclick="">Get My Route</button>
     </div>
 </div>
+    </form>
+{% endblock %}
+
 
 
 </body>
