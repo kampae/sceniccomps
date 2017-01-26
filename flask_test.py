@@ -32,8 +32,8 @@ def view_map():
     scenery = request.form['scenery']
     hours = request.form['hours']
     minutes = request.form['minutes']
-    waypoints = ['47.626925']
-    return flask.render_template('route.html', startpoint=waypoints, endpoint=endpoint)
+    waypoints = [startpoint, "[47.619869, -119.459762]", "[47.646012, -119.358825]", endpoint]
+    return flask.render_template('route.html', waypoints=waypoints, endpoint=endpoint)
     
     
 def test(startpoint):

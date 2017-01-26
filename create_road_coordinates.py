@@ -17,11 +17,11 @@ import googlemaps
 # Allie API key 3: AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g
 # Evie's API key: AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24
 
-def directions(coordinates):
+def directions(coordinates, curr_key, write_file):
     output_list = []
-    file = open('roadFile84000', 'w')
+    file = open(write_file, 'w')
     for n in coordinates:
-        gmaps = googlemaps.Client(key='AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24')
+        gmaps = googlemaps.Client(key=curr_key)
         routes = gmaps.directions(n, n, mode="driving")
         if(len(routes)>0):
             output_coords = [routes[0].get('legs')[0].get("start_location").get('lat'), routes[0].get('legs')[0].get("start_location").get('lng')]
@@ -35,10 +35,20 @@ def directions(coordinates):
 
 
 if __name__ == '__main__':
-    #read in file
-    with open('outputFileNum84000', 'r') as f:
-         coord_list = f.read().splitlines()
-    #test_list = ['48.715079, -120.308558422']
-    coor_list = directions(coord_list)
-    #write to file
-    f.close() 
+    
+    keys = ['AIzaSyBEQ0xXnvLUr_tA3qSvk62XKjsLtpZKLyw', 'AIzaSyB1eAbxLePfsBKeszxFtc3g4wRNwnWwuzA', 'AIzaSyCS4cJEpYt-1u6xRkJmqsiBKV1LHnYB0Mg', 'AIzaSyARnHNVEx6TYAc0m9eRxuH0sLPy_pzpAac', 'AIzaSyAns9sLJaIPkyKwcDxWiOCwAgOVCmvn7yw', 'AIzaSyBRamX0tFH2PitoYtFJQpzePC66a4Ijs4g', 'AIzaSyB6hGD2MtGOmQ8oo2dXta6SU8aZWL4-s24']
+    
+    for i in range(0, len(keys)):
+        file_num = 156000 + i*2400
+        read_file = 'outputFileNum' + str(file_num)
+        write_file = 'roadFile' + str(file_num)
+
+        #read in file
+        with open(read_file, 'r') as f:
+             coord_list = f.read().splitlines()
+        #test_list = ['48.715079, -120.308558422']
+        coor_list = directions(coord_list, keys[i], write_file)
+        #write to file
+        f.close()
+        
+        print("Just completed writing to file", write_file)

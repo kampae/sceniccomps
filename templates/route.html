@@ -11,7 +11,7 @@
       <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPn6VnGvKDcPjjnq9utmKMwVxPv0gln5w&callback=initMap">
     </script>
-  <body onload = initMap({{ startpoint|tojson }})>
+  <body onload = "initMap({{ waypoints|tojson }})">
     <div id="directions"></div>
     <div id="map"></div>
 

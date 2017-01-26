@@ -6,21 +6,25 @@ function initMap(waypoints) {
       center: {lat: 47.53, lng: -119.36}
     });
     directionsDisplay.setMap(map);
+    alert(waypoints);
     displayRoute(directionsService, directionsDisplay, waypoints);
 }
 
 function displayRoute(directionsService, directionsDisplay, waypoints) {
+    // start: [47.607140, -119.653053]
+    // end: [47.683360, -119.128378]
 //    47.607140, -119.653053
     // 47.435141, -120.292142
     //[47.619869, -119.459762]
     //[47.646012, -119.358825],
+    
     var start = waypoints[0];
     var spoint = parseFloat(start);
-    var coords = [[spoint, -122.317704], [47.619869, -119.459762], [47.646012, -119.358825], [47.683360, -119.128378]];
+//    var coords = [[spoint, -122.317704], [47.619869, -119.459762], [47.646012, -119.358825], [47.683360, -119.128378]];
     var waypts = [];
     for (var i = 1; i < coords.length - 1; i++)
     {
-        wayPoint = {"location" : {"lat" : coords[i][0], "lng": coords[i][1]}, "stopover": true};
+        wayPoint = {"location" : {"lat" : waypoints[i][0], "lng": waypoints[i][1]}, "stopover": true};
         waypts.push(wayPoint);
     }
 
