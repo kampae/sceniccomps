@@ -83,7 +83,6 @@ def find_relevant_area(points, max_time):
     corners = [bottom_left, bottom_right, top_right, top_left]
     
     return corners
-    return corners
     
 '''
 Given two points, finds the point on the same line, equidistant from the two given points

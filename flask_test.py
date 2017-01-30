@@ -4,6 +4,7 @@ from flask import Flask, jsonify, render_template, request, session
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
 import os
+import distance_matrix
 
 app = flask.Flask(__name__, static_folder='static', template_folder='templates')
 app.config['SECRET_KEY'] = 'F33459345**&4D';
@@ -32,9 +33,14 @@ def view_map():
     scenery = request.form['scenery']
     hours = request.form['hours']
     minutes = request.form['minutes']
-    waypoints = [startpoint, "[47.619869, -119.459762]", "[47.646012, -119.358825]", endpoint]
-    return flask.render_template('route.html', waypoints=waypoints, endpoint=endpoint)
-    
+    startpoint = startpoint.replace(" ", "+")
+    endpoint = endpoint.replace(" ", "+")
+    print(startpoint, endpoint)
+    #waypoints = distance_matrix.get_waypoints("2201+E+Newton+St,+Seattle,WA", "3324+NE+21st+Ave+Portland,OR+97212", "non-scenic", "22", "2")
+    waypoints = distance_matrix.get_waypoints(startpoint, endpoint, "non-scenic", "22", "2")
+    print(waypoints)
+    return flask.render_template('route.html', waypoints=waypoints)
+#    
     
 def test(startpoint):
     return '47.626925'
