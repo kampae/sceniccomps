@@ -5,7 +5,8 @@ Main function: take start and end points and max time willing to travel as input
                returns the coordinates of the four corners of the bounding square
 '''
 def find_relevant_area(points, max_time):
-    
+    max_time = max_time/60;
+    print(max_time)
     # Initializes values needed for the start/end points
     start_point = points[0]
     end_point = points[1]

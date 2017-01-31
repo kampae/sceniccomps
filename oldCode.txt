@@ -42,3 +42,33 @@
         if item[0]==scenery:
             coordinates.append(item[1])
     return coordinates
+    
+    
+    #    #start = '49.7016339,-123.1558121' #vancouver
+#    #end = '36.1699412,-115.1398296' #las vegas
+#    start = '48.62995890000001, -124.7537899'
+#    end = '48.7062475, -124.7531533'
+#    #end = '47.6062095,-122.3320708' #seattle
+#    # vancouver, seattle, sanFran, spokane, portland, bend, las vegas
+#    #coordinates = [[49.7016339,-123.1558121], [47.6062095,-122.3320708], [37.7749295,-122.4194155], [47.6587802, -117.4260466], [45.5230622, -122.6764816], [44.0581728,-121.3153096], [36.1699412,-115.1398296]]
+#   #vancouver, richmond, burnaby, delta
+#    #coordinates = [[49.7016339,-123.1558121], [49.185992, -123.097537], [49.220953, -123.00881], [49.134848, -123.032913]] 
+#    coordinates = read_classified_points("testFile.csv", "non-scenic")
+#    w, h = len(coordinates), len(coordinates) 
+#    distances = {}
+#    matrix = [[0 for x in range(w)] for y in range(h)]
+#    dist_dictionary, names_list = get_distances(coordinates, end, distances)
+#    #print(dist_dictionary)
+#    max_distance = 25000
+#    #print(names_list)
+#    output_list = route_ilp(dist_dictionary, names_list, max_distance)
+#    print(order_output(output_list, start, end))
+#    #getCrowDistance(coordinates)
+#    #print(result['rows'][0].get("elements")[k].get('duration').get('value'))
+#    #matrix[i][destination_list[k]] = result['rows'][0].get("elements")[k].get('duration').get('value')
+
+
+
+-42.73554552938072, -136.99048686355027), (61.02895148861355, -211.30858128612448), (135.9207735293807, -107.9574081364497), (32.156276511386444, -33.63931371387551
+
+
