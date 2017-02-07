@@ -47,7 +47,7 @@ def makeTransformer(net, mu):
 
     # set the size of the input (we can skip this if we're happy
     #  with the default; we can also change it later, e.g., for different batch sizes)
-    net.blobs['data'].reshape(50,        # batch size
+    net.blobs['data'].reshape(10,        # batch size
                               3,         # 3-channel (BGR) images
                               227, 227)  # image size is 227x227
     
