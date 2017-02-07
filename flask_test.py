@@ -41,7 +41,11 @@ def view_map():
         # to get from start to end directly
     max_time = hours*60*60 + minutes*60
     time_valid = check_user_input.check_max_time(max_time)
+    start_valid = check_user_input.check_address(startpoint)
+    end_valid = check_user_input.check_address(endpoint)
     
+    if not (time_valid and start_valid and end_valid):
+        return flask.render_template('bad_input.html')
     
     print(startpoint, endpoint)
     #waypoints = distance_matrix.get_waypoints("2201+E+Newton+St,+Seattle,WA", "3324+NE+21st+Ave+Portland,OR+97212", "non-scenic", "22", "2")
