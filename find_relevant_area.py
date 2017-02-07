@@ -1,12 +1,12 @@
 import math
+from geopy.distance import vincenty
 
 '''
 Main function: take start and end points and max time willing to travel as input
                returns the coordinates of the four corners of the bounding square
 '''
 def find_relevant_area(points, max_time):
-    max_time = max_time/60;
-    print(max_time)
+    max_time = (max_time/60)/60;
     # Initializes values needed for the start/end points
     start_point = points[0]
     end_point = points[1]
@@ -22,8 +22,8 @@ def find_relevant_area(points, max_time):
     Cy = center[1]
 
     # Converts max time to max distance using the assumption time is communicated in mins and
-        # you will not be traveling greater than 70mph on average
-    max_dist = 70/60 * max_time
+        # you will not be traveling greater than 55mph on average
+    max_dist = 55/60 * max_time
     
     # Finds the distance between the start and end points
     dist_between_points = find_dist_between_pts(start_point, end_point)

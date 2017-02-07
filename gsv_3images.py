@@ -6,7 +6,7 @@ import os
 from PIL import Image
 
 def get_streetview(coords):
-    apiKey = 'AIzaSyBJN20CtR9R9AdWsInx-sAF_CoLRkI66so'
+    apiKey = 'AIzaSyD5kbefDW2RHY30LGQv2sP6tjfY8Dj0aqs' #'AIzaSyBJN20CtR9R9AdWsInx-sAF_CoLRkI66so'
 
     all_images = []
     

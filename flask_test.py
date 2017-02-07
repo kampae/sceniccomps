@@ -38,6 +38,7 @@ def view_map():
     print(startpoint, endpoint)
     #waypoints = distance_matrix.get_waypoints("2201+E+Newton+St,+Seattle,WA", "3324+NE+21st+Ave+Portland,OR+97212", "non-scenic", "22", "2")
     waypoints = distance_matrix.get_waypoints(startpoint, endpoint, scenery, hours, minutes)
+    print("WAYPOINTS: ", waypoints)
     return flask.render_template('route.html', waypoints=waypoints)
 #    
     

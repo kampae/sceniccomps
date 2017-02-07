@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Scenic Comps</title>
+  <title>GoScenic</title>
   <link rel="stylesheet" type = "text/css" href="/static/ScenicComps.css"/>
 <!--  <link rel="stylesheet" href="ScenicComps.css"/>-->
 </head>
@@ -15,7 +15,7 @@
 <script type="text/javascript" src="{{ url_for('static', filename='ScenicComps.js') }}"></script>
 <!--    <script src="ScenicComps.js"></script>-->
 <div class="header">
-    <h1>Scenic Comps</h1>
+    <h1>GoScenic</h1>
 </div>
 <h2><i>Enjoy the Ride!</i></h2>
  
@@ -28,18 +28,18 @@
         <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' required></p>
     </div>
         <div id="end" class="loc_box">
-        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint'></p>
+        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint' required></p>
     </div>
     </div>
     <div id="timescenery">
         <div id="time">
-            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours">               Hours
-            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes">
+            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours" required>               Hours
+            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes" required>
             Minutes
         </div>
         
         <div id="scenery">
-            <p><select id = "scenery_select" name='scenery'>
+            <p id="sceneryp"><select id = "scenery_select" name='scenery' required>
                 <option value="">Select Scenery</option>
                 <option value="mountain">Mountains</option>
                 <option value="water">Water</option>
