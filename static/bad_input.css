@@ -1,0 +1,18 @@
+html {
+    background: url(scenicRoad.jpg) no-repeat center center fixed;
+    -webkit-background-size: 100%; 
+}
+
+h1 {
+    margin-top: 10%;
+    color: white;
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 0px;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 10px;
