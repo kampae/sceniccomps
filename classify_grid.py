@@ -4,24 +4,22 @@ import create_grid_coords
 import os
 import sys
 
-
+'''
+Function that takes in a list of road coordinates. Uses gsv_3images.py to gather streetview images 
+at each coordinate and caffe_3images.py to classify the scenery in each image. Stores top three 
+classifications for each coordinate in a classified_points csv file.
+'''
 def get_classifications(coords):
-    file = open("ClassifiedPoints/classified_points117600.csv", "w")
-    # set up caffe net 
-    net, mu = caffe_3images.makeNet()
-    transformer, net = caffe_3images.makeTransformer(net, mu)
+    file = open("ClassifiedPoints/classified_points124800.csv", "w")
+    net, mu = caffe_3images.make_net()
+    transformer, net = caffe_3images.make_transformer(net, mu)
 
     for latlng in coords:
-        # gather 3 images for the lat lng coordinates 
         images = gsv_3images.get_streetview(latlng)
     
-        # will store list of 3 classifications and their probabilities
         three_classifications = []
     
-        # classify all 3 images 
         for image in images:
-            # classification = [classification keyword, probability]
-            #print("Image I am trying to classify: ", image)
             classification = caffe_3images.classify(net, image, transformer)
         
             three_classifications.append(classification)
@@ -36,20 +34,16 @@ def get_classifications(coords):
         os.remove("Pic2.jpg")
     
     file.close()
-        
+
+'''
+In main, open a file of road coordinates and pass them to get_classifications.
+'''
 if __name__ == "__main__":
-    # sample coordinate list
-    #coords = [["44.5101349, -93.14554699999997"]] 
-    
-#    arguments = sys.argv
-#    inputFile = arguments[1]
-#    outputFile = arguments[2]
     
     coords = []
-    with open('RoadCoords/roadFile117600') as inputfile:
+    with open('RoadCoords/roadFile124800') as inputfile:
         for line in inputfile:
             coords.append([line.strip()])
     
     get_classifications(coords)
     
-    #HAD ERROR WHEN TRYING TO RUN roadFile52800!! so not all its points were classified

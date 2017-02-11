@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
-#%matplotlib inline
 plt.rcParams['figure.figsize'] = (10,10)
 plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'            
@@ -12,11 +11,12 @@ caffe_root = '../'
 sys.path.insert(0, caffe_root + 'python')
 
 import caffe
-
 import os
 
-
-def makeNet():
+'''
+Sets up caffe neural net.
+'''
+def make_net():
     if os.path.isfile(caffe_root + 'models/placesCNN_upgraded/places205CNN_iter_300000_upgraded.caffemodel'):
         print 'CaffeNet found.'
 
@@ -36,7 +36,10 @@ def makeNet():
 
     return net, mu;
 
-def makeTransformer(net, mu):
+'''
+Creates the transformer that will be used to simplify images passed to the neural net. 
+'''
+def make_transformer(net, mu):
     # create transformer for the input called 'data'
     transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
 
@@ -53,13 +56,15 @@ def makeTransformer(net, mu):
     
     return transformer, net
     
-#classification = []    
+'''
+Classify an image using the pretrained neural network as one of six scenery options with probabilities. 
+'''    
 def classify(net, image, transformer):
-    mydict = {}
+    my_dict = {}
     with open('categories.csv', mode='r') as infile:
         reader = csv.reader(infile)
         for rows in reader:
-            mydict[rows[0]] = rows[1]
+            my_dict[rows[0]] = rows[1]
             
     image = caffe.io.load_image(caffe_root + 'sceniccomps/' + image) #Specify image, can be url (with more code) or image from folder
     transformed_image = transformer.preprocess('data', image)
@@ -68,7 +73,7 @@ def classify(net, image, transformer):
     # copy the image data into the memory allocated for the net
     net.blobs['data'].data[...] = transformed_image
 
-    ### perform classification
+    # perform classification
     output = net.forward()
     
     # will store classification and probability. this is what the function will return 
@@ -78,18 +83,16 @@ def classify(net, image, transformer):
     
     # load ImageNet labels
     labels_file = caffe_root + 'models/placesCNN_upgraded/categoryIndex_places205.csv'
-
     labels = np.loadtxt(labels_file, str, delimiter='\t')
-    
-    classification.append(mydict[labels[output_prob.argmax()]])
-    
+    classification.append(my_dict[labels[output_prob.argmax()]])
     classification.append(output_prob[0])
     
     return classification
 
-if __name__ == "__main__":
 
-    image = caffe.io.load_image(caffe_root + 'sceniccomps/CarletonImage.jpg') #'examples/stitchtest.jpg')
-    net, mu = makeNet()
-    transformer, net = makeTransformer(net, mu)
-    classify(net, image, transformer)
+#if __name__ == "__main__":
+#
+#    image = caffe.io.load_image(caffe_root + 'sceniccomps/CarletonImage.jpg')
+#    net, mu = make_net()
+#    transformer, net = make_transformer(net, mu)
+#    classify(net, image, transformer)

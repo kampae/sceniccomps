@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPn6VnGvKDcPjjnq9utmKMwVxPv0gln5w&libraries=places&callback=initAutocomplete" async defer></script>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>GoScenic</title>
+  <link rel="stylesheet" type = "text/css" href="/static/ScenicTiles.css"/>
+<!--  <link rel="stylesheet" href="ScenicComps.css"/>-->
+</head>
+    
+<body>
+<script type="text/javascript" src="{{ url_for('static', filename='ScenicComps.js') }}"></script>
+
+<!--    Row 1-->
+<div class = "row">
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road1.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road2.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road3.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road4.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road6.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+</div>
+
+<!--    Row 2-->
+<div class="row" id="row2">
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road6.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+    
+<div id = 'infoBox'>
+    
+<h1>GoScenic</h1>
+<h2><i>Enjoy the Ride!</i></h2>
+ 
+ 
+ {% block content %}
+    <form id = "userInputs" method="post" action="{{ url_for('view_map') }}">
+<div id="box">
+    <div id = "startend">
+    <div id="start" class="loc_box">
+        <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' required></p>
+    </div>
+        <div id="end" class="loc_box">
+        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint' required></p>
+    </div>
+    </div>
+    <div id="timescenery">
+        <div id="time">
+            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours" required>               Hours
+            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes" required>
+            Minutes
+        </div>
+        
+        <div id="scenery">
+            <p id="sceneryp"><select id = "scenery_select" name='scenery' required>
+                <option value="">Select Scenery</option>
+                <option value="mountain">Mountains</option>
+                <option value="water">Water</option>
+                <option value="fields">Fields</option>
+                <option value="nature and woods">Nature and Woods</option>
+                <option value="non-scenic">Non-Scenic</option>
+                <option value="sightseeing">Sightseeing</option>
+                
+            </select></p>
+        </div>
+    </div>
+    
+    <div id = "button">
+        <button id="go" onclick="">Get My Route</button>
+    </div>
+</div>
+    </form>
+{% endblock %}
+</div>
+    
+<div class="box">
+  <div class="tile">
+    <img src="/static/road4.jpg" style="width: 100%; height: 100%;" />
+  </div>
+</div>
+</div>
+    
+<div class="row">
+ <div class="box">
+      <div class="tile">
+        <img src="/static/road4.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road6.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road1.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road2.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>
+      
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road3.jpg" style="width: 100%; height: 100%;" />
+      </div>
+    </div>    
+</div>
+
+</body>
+</html>

@@ -14,7 +14,8 @@ GoogleMaps(app, key='AIzaSyAZzeHhs-8JZ7i18MjFuM35dJHq70n3Hx4')
 
 @app.route("/")
 def get_main_page():
-    return flask.render_template('ScenicComps.html')
+    #return flask.render_template('ScenicComps.html')
+    return flask.render_template('ScenicTiles.html')
 
 @app.route("/<inputs>/")
 def second_page(inputs):
@@ -39,12 +40,18 @@ def view_map():
     
     # This code calls check_user_input module and makes sure time given is at least as much as it takes
         # to get from start to end directly
-    max_time = hours*60*60 + minutes*60
-    time_valid = check_user_input.check_max_time(max_time)
-    start_valid = check_user_input.check_address(startpoint)
-    end_valid = check_user_input.check_address(endpoint)
+    max_time = (int(hours)*60 + int(minutes))*60
     
-    if not (time_valid and start_valid and end_valid):
+    start_valid = check_user_input.check_address(startpoint)
+    if not start_valid:
+        return flask.render_template('bad_input.html')
+
+    end_valid = check_user_input.check_address(endpoint)
+    if not end_valid:
+        return flask.render_template('bad_input.html')
+    
+    time_valid = check_user_input.check_max_time(max_time, startpoint, endpoint)
+    if not time_valid:
         return flask.render_template('bad_input.html')
     
     print(startpoint, endpoint)

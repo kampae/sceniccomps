@@ -1,10 +1,9 @@
 import math
-<<<<<<< HEAD
 from geopy.distance import vincenty
-=======
 import simplejson
 from geopy.distance import vincenty
-from urllib.request import urlopen
+from urllib2 import urlopen
+
 
 '''
 Main function: take start and end points and max time willing to travel as input
