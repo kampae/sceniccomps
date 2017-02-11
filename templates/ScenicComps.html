@@ -11,13 +11,25 @@
 <!--  <link rel="stylesheet" href="ScenicComps.css"/>-->
 </head>
     
-<body>
+<body onload = "setBadinput({{ badInput|tojson }})">
 <script type="text/javascript" src="{{ url_for('static', filename='ScenicComps.js') }}"></script>
 <!--    <script src="ScenicComps.js"></script>-->
 <div class="header">
     <h1>GoScenic</h1>
 </div>
 <h2><i>Enjoy the Ride!</i></h2>
+    
+<div id = "badstart" hidden="true">
+    The provided start address is invalid. Please review your input and try again.
+</div>
+    
+<div id = "badend" hidden="true">
+    The provided end address is invalid. Please review your input and try again.
+</div>
+    
+<div id = "badtime" hidden="true">
+    Your destination cannot be reached in the provided time limit. Please review your input and try again.
+</div>
  
  
  {% block content %}
@@ -25,16 +37,16 @@
 <div id="box">
     <div id = "startend">
     <div id="start" class="loc_box">
-        <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' required></p>
+        <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' value = "{{start}}" required></p>
     </div>
         <div id="end" class="loc_box">
-        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint' required></p>
+        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint' value = "{{end}}" required></p>
     </div>
     </div>
     <div id="timescenery">
         <div id="time">
-            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours" required>               Hours
-            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes" required>
+            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours" value = "{{hours}}" required>               Hours
+            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes" value = "{{minutes}}" required>
             Minutes
         </div>
         
@@ -55,6 +67,7 @@
     <div id = "button">
         <button id="go" onclick="">Get My Route</button>
     </div>
+
 </div>
     </form>
 {% endblock %}

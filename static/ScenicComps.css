@@ -68,3 +68,24 @@ h2 {
     height: 21px;
     margin: 0px;
 }
+
+#badstart{
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    color: white;
+}
+
+#badend{
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    color: white;
+}
+
+#badtime{
+    font-size: 30px;
+    font-weight: bolder;
+    text-align: center;
+    color: white;
+}

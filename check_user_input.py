@@ -1,12 +1,11 @@
 import googlemaps
+import simplejson
+from urllib.request import urlopen
 
-def check_max_time(max_time):
+def check_max_time(max_time, start, end):
     
-    start = "44.706885,-93.713955"
-    destinations = "44.849651,-92.714665"
     api_key = 'AIzaSyBpaOfrcYIpU-7jb-M4zOAyHgBpzoPEoqg'
-    
-    urlstring = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + start + '&destinations=' + destinations + '&mode=driving&key=' + api_key
+    urlstring = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + start + '&destinations=' + end + '&mode=driving&key=' + api_key
     
     result = simplejson.load(urlopen(urlstring))
     min_time = result['rows'][0]['elements'][0]['duration'].get('value')

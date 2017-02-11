@@ -14,7 +14,7 @@ GoogleMaps(app, key='AIzaSyAZzeHhs-8JZ7i18MjFuM35dJHq70n3Hx4')
 
 @app.route("/")
 def get_main_page():
-    return flask.render_template('ScenicComps.html')
+    return flask.render_template('ScenicComps.html', badInput=0, start="", end="", hours=0, minutes=0, scenicChoice="Select Scenery")
 
 @app.route("/<inputs>/")
 def second_page(inputs):
@@ -34,22 +34,31 @@ def view_map():
     scenery = request.form['scenery']
     hours = request.form['hours']
     minutes = request.form['minutes']
-    startpoint = startpoint.replace(" ", "+")
-    endpoint = endpoint.replace(" ", "+")
+    
+    startpoint_url = startpoint.replace(" ", "+")
+    endpoint_url = endpoint.replace(" ", "+")
+#    scenery_caps = scenery[0].upper() + scenery[1:]
+#    print(scenery_caps)
     
     # This code calls check_user_input module and makes sure time given is at least as much as it takes
         # to get from start to end directly
-    max_time = hours*60*60 + minutes*60
-    time_valid = check_user_input.check_max_time(max_time)
-    start_valid = check_user_input.check_address(startpoint)
-    end_valid = check_user_input.check_address(endpoint)
+    max_time = (int(hours)*60 + int(minutes))*60
     
-    if not (time_valid and start_valid and end_valid):
-        return flask.render_template('bad_input.html')
+    start_valid = check_user_input.check_address(startpoint_url)
+    if not start_valid:
+        return flask.render_template('ScenicComps.html', badInput=1, start=startpoint, end=endpoint, hours=hours, minutes=minutes, scenicChoice=scenery)
     
-    print(startpoint, endpoint)
+    end_valid = check_user_input.check_address(endpoint_url)
+    if not end_valid:
+        return flask.render_template('ScenicComps.html', badInput=2, start=startpoint, end=endpoint, hours=hours, minutes=minutes, scenicChoice=scenery)
+    
+    time_valid = check_user_input.check_max_time(max_time, startpoint_url, endpoint_url)
+    if not time_valid:
+        return flask.render_template('ScenicComps.html', badInput=3, start=startpoint, end=endpoint, hours=hours, minutes=minutes, scenicChoice=scenery)
+    
+    #print(startpoint, endpoint)
     #waypoints = distance_matrix.get_waypoints("2201+E+Newton+St,+Seattle,WA", "3324+NE+21st+Ave+Portland,OR+97212", "non-scenic", "22", "2")
-    waypoints = distance_matrix.get_waypoints(startpoint, endpoint, scenery, hours, minutes)
+    waypoints = distance_matrix.get_waypoints(startpoint_url, endpoint_url, scenery, hours, minutes)
     print("WAYPOINTS: ", waypoints)
     return flask.render_template('route.html', waypoints=waypoints)
 #    

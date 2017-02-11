@@ -1,7 +1,4 @@
 import math
-<<<<<<< HEAD
-from geopy.distance import vincenty
-=======
 import simplejson
 from geopy.distance import vincenty
 from urllib.request import urlopen
