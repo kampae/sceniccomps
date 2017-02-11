@@ -1,7 +1,6 @@
 import math
 from geopy.distance import vincenty
 import simplejson
-from geopy.distance import vincenty
 from urllib2 import urlopen
 
 
@@ -104,9 +103,9 @@ def find_center(point1, point2):
 Given two points, implements the distance formula to determine the distance between them
 '''
 def find_dist_between_pts(point1, point2):
-    #dist_between_points = math.sqrt(((point1[0]-point2[0])**2) + ((point1[1]-point2[1])**2))
+    dist_between_points = math.sqrt(((point1[0]-point2[0])**2) + ((point1[1]-point2[1])**2))
     
-    dist_between_points = vincenty(point1, point2).miles
+    #dist_between_points = vincenty(point1, point2).miles
     
     return dist_between_points
 

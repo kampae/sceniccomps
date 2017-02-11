@@ -196,8 +196,8 @@ def get_waypoints(start, end, scenery, hours, minutes):
    
     time = (int(hours)*60 + int(minutes))*60
     corners = find_relevant_area.find_relevant_area([start_coordinate, end_coordinate], time)
+
     coordinates = read_classified_points("ClassifiedPoints/classified_points14400_Tester.csv", scenery)
-#    coordinates = read_classified_points("ClassifiedPoints/classified_points14400.csv", scenery)
     coordinates.append(end_coordinate)
     coordinates.insert(0, start_coordinate)
 

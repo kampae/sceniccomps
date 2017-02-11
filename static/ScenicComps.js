@@ -1,10 +1,28 @@
-function initAutocomplete() 
+function initAutocomplete()
 {
+
     var autocomplete = new google.maps.places.Autocomplete( (document.getElementById('start_input')),
         {types: ['geocode']});
     
     var autocomplete = new google.maps.places.Autocomplete( (document.getElementById('end_input')),
         {types: ['geocode']});
+}
+
+function setBadinput(badInput)
+{
+
+    if(badInput == 1)
+    {
+        document.getElementById('badstart').style.display = 'block';
+    }
+    if(badInput == 2)
+    {
+        document.getElementById('badend').style.display = 'block';
+    }
+        if(badInput == 3)
+    {
+        document.getElementById('badtime').style.display = 'block';
+    }
 }
 
 function getInputs()

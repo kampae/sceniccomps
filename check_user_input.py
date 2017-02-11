@@ -6,6 +6,7 @@ from urllib2 import urlopen
 Given a max time, start point, and end point, determines if the trip from start to end can be achieved
 in the provided amount of time. Returns True if so, False if not.
 '''
+
 def check_max_time(max_time, start, end):
     
     api_key = 'AIzaSyBpaOfrcYIpU-7jb-M4zOAyHgBpzoPEoqg'
