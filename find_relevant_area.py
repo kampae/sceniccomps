@@ -2,6 +2,7 @@ import math
 from geopy.distance import vincenty
 import simplejson
 from urllib2 import urlopen
+#from urllib.request import urlopen
 
 
 '''

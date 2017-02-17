@@ -1,8 +1,8 @@
 import sys
 import simplejson
-#from urllib2 import urlopen
-#from urllib.request import urlopen
 from urllib2 import urlopen
+#from urllib.request import urlopen
+#from urllib2 import urlopen
 import os
 from geopy.distance import vincenty
 import pulp
@@ -87,11 +87,14 @@ def get_crow_distance_matrix(coordinates, final, matrix):
 Reads from a file of classified road coordinates and creates a list of only coordinates
 with the given scenery classification.
 '''
-def read_classified_points(file_name, scenery_type):
+def read_classified_points(file_name, scenery_type, start, end, time):
+    count = 0
     classified_coord_list = []
+    corners = find_relevant_area.find_relevant_area([start, end], time)
+    
     with open(file_name, 'r') as f:
         input_lines = f.read().splitlines()
-    
+        
     for x in input_lines:
         new_line = x.replace("[", "")
         new_line = new_line.replace("]", "")
@@ -100,10 +103,36 @@ def read_classified_points(file_name, scenery_type):
         line_list = new_line.split()
         
         if(line_list[2] == scenery_type or line_list[4] == scenery_type or line_list[6]==scenery_type):
+            count += 1
             coordinates = [float(line_list[0]), float(line_list[1])]
-            classified_coord_list.append(coordinates)
+            if coord_in_range(coordinates, corners):
+                classified_coord_list.append(coordinates)
     
+    #print("BEFORE: ", count)
+    #print("AFTER: ", len(classified_coord_list))
     return classified_coord_list
+
+'''
+Checks if passed coord is in the relevant area, given the start and end coordinates
+and max time.
+Returns True or False
+'''
+def coord_in_range(coord, corners):
+
+    x = []
+    y = []
+    
+    for pt in corners:
+        x.append(pt[0])
+        y.append(pt[1])
+        
+    min_x = min(x)
+    max_x = max(x)
+    min_y = min(y)
+    max_y = max(y)
+
+    return not(coord[0] < min_x or coord[0] > max_x or coord[1] < min_y or coord[1] > max_y)
+
 
 
 '''
@@ -195,9 +224,11 @@ def get_waypoints(start, end, scenery, hours, minutes):
     
    
     time = (int(hours)*60 + int(minutes))*60
-    corners = find_relevant_area.find_relevant_area([start_coordinate, end_coordinate], time)
+    #corners = find_relevant_area.find_relevant_area([start_coordinate, end_coordinate], time)
 
-    coordinates = read_classified_points("ClassifiedPoints/classified_points14400_Tester.csv", scenery)
+    coordinates = read_classified_points("ClassifiedPoints/classified_points14400_Tester.csv", scenery, start_coordinate, end_coordinate, time)
+            
+    
     coordinates.append(end_coordinate)
     coordinates.insert(0, start_coordinate)
     print("!!!!!!!", len(coordinates))
@@ -211,6 +242,11 @@ def get_waypoints(start, end, scenery, hours, minutes):
     string_start = str(start_coordinate[0]) + ", " + str(start_coordinate[1])
     string_end = str(end_coordinate[0]) + ", " + str(end_coordinate[1])
     list_of_points = order_output(output_list, string_start, string_end)
-    print(len(list_of_points), "************")
+    
+    #print(len(list_of_points), "************")
+    
+#    print(min(dist_dictionary.values()))
+#    print(max(dist_dictionary.values()))
+    
     return list_of_points
 

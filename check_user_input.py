@@ -1,6 +1,8 @@
 import googlemaps
 import simplejson
 from urllib2 import urlopen
+#from urllib.request import urlopen
+
 
 '''
 Given a max time, start point, and end point, determines if the trip from start to end can be achieved
