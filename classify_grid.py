@@ -10,7 +10,7 @@ at each coordinate and caffe_3images.py to classify the scenery in each image. S
 classifications for each coordinate in a classified_points csv file.
 '''
 def get_classifications(coords):
-    file = open("ClassifiedPoints/classified_points124800.csv", "w")
+    file = open("ClassifiedPoints/classified_points170400.csv", "w")
     net, mu = caffe_3images.make_net()
     transformer, net = caffe_3images.make_transformer(net, mu)
 
@@ -41,7 +41,7 @@ In main, open a file of road coordinates and pass them to get_classifications.
 if __name__ == "__main__":
     
     coords = []
-    with open('RoadCoords/roadFile124800') as inputfile:
+    with open('RoadCoords/roadFile170400') as inputfile:
         for line in inputfile:
             coords.append([line.strip()])
     

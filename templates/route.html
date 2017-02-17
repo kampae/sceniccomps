@@ -6,13 +6,19 @@
     <title>Route</title>
     <link rel="stylesheet" type = "text/css" href="/static/route.css"/>    
 <!--      ?version=1.1-->
+      <input type="hidden" id="myVar" name="variable" value = '{{ waypoints|tojson }}'>
   </head>
     <script type="text/javascript" src="{{ url_for('static', filename='route.js') }}"></script>
       <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPn6VnGvKDcPjjnq9utmKMwVxPv0gln5w&callback=initMap">
     </script>
-  <body onload = "initMap({{ waypoints|tojson }})">
-    <div id="directions"></div>
-   <div id="map"></div>     
+    <body onload = "initMap()">
+    <div id="rightpanel">
+        <div id="border"><div id="myroute"><h1 id="goScenic">GoScenic</h1><div id="routedeets"></div></div></div>
+        <div id="directions"></div>
+
+        </div>
+   <div id="map"></div>
+    <div id="pano"></div>
   </body>
 </html>

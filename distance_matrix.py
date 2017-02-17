@@ -200,7 +200,7 @@ def get_waypoints(start, end, scenery, hours, minutes):
     coordinates = read_classified_points("ClassifiedPoints/classified_points14400_Tester.csv", scenery)
     coordinates.append(end_coordinate)
     coordinates.insert(0, start_coordinate)
-
+    print("!!!!!!!", len(coordinates))
     
     w, h = len(coordinates), len(coordinates)
     distances = {}
@@ -211,6 +211,6 @@ def get_waypoints(start, end, scenery, hours, minutes):
     string_start = str(start_coordinate[0]) + ", " + str(start_coordinate[1])
     string_end = str(end_coordinate[0]) + ", " + str(end_coordinate[1])
     list_of_points = order_output(output_list, string_start, string_end)
-    
+    print(len(list_of_points), "************")
     return list_of_points
 
