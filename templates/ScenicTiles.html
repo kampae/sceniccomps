@@ -11,71 +11,117 @@
 <!--  <link rel="stylesheet" href="ScenicComps.css"/>-->
 </head>
     
-<body>
+<body onload = "setBadinput({{ badInput|tojson }})">
 <script type="text/javascript" src="{{ url_for('static', filename='ScenicComps.js') }}"></script>
 
 <!--    Row 1-->
 <div class = "row">
     <div class="box">
       <div class="tile">
-        <img src="/static/road1.jpg" style="width: 100%; height: 100%;" />
+
+        <img class="roadPic" src="/static/road1.jpg" />
+
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road2.jpg" style="width: 100%; height: 100%;" />
+        <img class="roadPic" src="/static/road2.jpg" />
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road3.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road3.jpg" class="roadPic" />
+      </div>
+    </div>
+    
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road4.jpg" class="roadPic" />
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road4.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road5.jpg" class="roadPic" />
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road6.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road6.jpg" class="roadPic" />
       </div>
     </div>
 </div>
 
 <!--    Row 2-->
-<div class="row" id="row2">
+<div class = "row2">
+    <div class="sidepics">
     <div class="box">
       <div class="tile">
-        <img src="/static/road6.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road7.jpg" class="roadPic" />
       </div>
+    </div>    
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road8.jpg" class="roadPic" />
+      </div>
+        </div>
+        </div>
+    
+<!--
+<div id = 'infoBoxImage'>
+    <img src="/static/road3.jpg" style="width: 100%; height: 100%; opacity: 0.5;" />
     </div>
+-->
+    
     
 <div id = 'infoBox'>
+
+
+<!--
+    <div id = 'infoBoxImage'>
+      </div>
+-->
     
 <h1>GoScenic</h1>
 <h2><i>Enjoy the Ride!</i></h2>
- 
+
+ <div id = "badinput" hidden="true">
+    <img src="/static/warning.png" style="width: 20px; height: 20px;" />
+</div>   
+
+<!--
+<div class = "badinput" id = "badstart" hidden="true">
+    <img src="/static/alert.jpg" style="width: 20px; height: 20px;" />
+    The provided start address is invalid. Please review your input and try again.
+</div>
+    
+<div class = "badinput" id = "badend" hidden="true">
+    The provided end address is invalid. Please review your input and try again.
+</div>
+    
+<div class = "badinput" id = "badtime" hidden="true">
+    Your destination cannot be reached in the provided time limit. Please review your input and try again.
+</div>
+-->
  
  {% block content %}
     <form id = "userInputs" method="post" action="{{ url_for('view_map') }}">
 <div id="box">
     <div id = "startend">
     <div id="start" class="loc_box">
-        <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' required></p>
+        <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' value = "{{start}}" required></p>
     </div>
         <div id="end" class="loc_box">
-        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint' required></p>
+        <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint' value = "{{end}}" required></p>
     </div>
     </div>
     <div id="timescenery">
         <div id="time">
-            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours" required>               Hours
-            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes" required>
+            <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours" value = "{{hours}}" required>               Hours
+            <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes" value = "{{minutes}}" required>
             Minutes
         </div>
         
@@ -100,44 +146,58 @@
     </form>
 {% endblock %}
 </div>
+
     
-<div class="box">
-  <div class="tile">
-    <img src="/static/road4.jpg" style="width: 100%; height: 100%;" />
-  </div>
-</div>
+    <div class="sidepics">
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road9.jpg" class="roadPic" />
+      </div>
+    </div>    
+    <div class="box">
+      <div class="tile">
+        <img src="/static/road10.jpg" class="roadPic" />
+      </div>
+        </div>
+        </div>
 </div>
     
 <div class="row">
  <div class="box">
       <div class="tile">
-        <img src="/static/road4.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road11.jpg" class="roadPic" />
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road6.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road6.jpg" class="roadPic" />
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road1.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road1.jpg" class="roadPic" />
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road2.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road2.jpg" class="roadPic" />
       </div>
     </div>
       
     <div class="box">
       <div class="tile">
-        <img src="/static/road3.jpg" style="width: 100%; height: 100%;" />
+        <img src="/static/road3.jpg" class="roadPic" />
       </div>
     </div>    
+
+        <div class="box">
+      <div class="tile">
+        <img src="/static/road3.jpg" class="roadPic" />
+      </div>
+    </div>
 </div>
 
 </body>

@@ -13,15 +13,18 @@ function setBadinput(badInput)
 
     if(badInput == 1)
     {
-        document.getElementById('badstart').style.display = 'block';
+        document.getElementById('badinput').style.display = 'block';
+        document.getElementById('badinput').innerHTML += "Please enter a valid start address.";
     }
     if(badInput == 2)
     {
-        document.getElementById('badend').style.display = 'block';
+        document.getElementById('badinput').style.display = 'block';
+        document.getElementById('badinput').innerHTML += "Please enter a valid end address.";
     }
         if(badInput == 3)
     {
-        document.getElementById('badtime').style.display = 'block';
+        document.getElementById('badinput').style.display = 'block';
+        document.getElementById('badinput').innerHTML += "Your destination cannot be reached in the provided time limit.";
     }
 }
 

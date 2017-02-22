@@ -9,7 +9,7 @@ from PIL import Image
 Takes in a coordinate point and retrieves 3 120 degree google streetview images from that point.
 '''
 def get_streetview(coords):
-    api_key = 'AIzaSyBJN20CtR9R9AdWsInx-sAF_CoLRkI66so' #'AIzaSyD5kbefDW2RHY30LGQv2sP6tjfY8Dj0aqs' 
+    api_key =  'AIzaSyD5kbefDW2RHY30LGQv2sP6tjfY8Dj0aqs' # AIzaSyBJN20CtR9R9AdWsInx-sAF_CoLRkI66so 
     all_images = []
     
     for i in range(0, 3):
@@ -20,3 +20,4 @@ def get_streetview(coords):
         all_images.append(file_name)
         
     return all_images
+

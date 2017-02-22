@@ -1,1 +1,1 @@
-all_classified_points.csv contains classified points files 0-26400
+all_classified_points.csv contains classified points files 0-129600
