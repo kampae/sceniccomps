@@ -44,39 +44,39 @@ function initMap()
     });
     
     // Drag Code Start
-    var i = 0;
-    var dragging = false;
-        $('#dragbar').mousedown(function(e){
-            e.preventDefault();
-       
-            dragging = true;
-            var pano = $('#pano');
-            var dragbar = $("#dragbar");
-            var ghostbar = $('<div>',
-                            {id:'ghostbar',
-                            css: {
-                                height: dragbar.outerHeight(),
-                                width: dragbar.outerWidth(),
-                                top: pano.offset().top,
-                                bottom: pano.offset().bottom
-                                }
-                            }).appendTo('body');
-       
-            $(document).mousemove(function(e){
-                ghostbar.css("top",e.pageY+2);
-            });
-        });
-
-        $(document).mouseup(function(e){
-        if (dragging) 
-        {
-           $('#map').css("height",e.pageY+2);
-           $('#pano').css("top",e.pageY+2);
-           $('#ghostbar').remove();
-           $(document).unbind('mousemove');
-           dragging = false;
-        }
-    });
+//    var i = 0;
+//    var dragging = false;
+//        $('#dragbar').mousedown(function(e){
+//            e.preventDefault();
+//       
+//            dragging = true;
+//            var pano = $('#pano');
+//            var dragbar = $("#dragbar");
+//            var ghostbar = $('<div>',
+//                            {id:'ghostbar',
+//                            css: {
+//                                height: dragbar.outerHeight(),
+//                                width: dragbar.outerWidth(),
+//                                top: pano.offset().top,
+//                                bottom: pano.offset().bottom
+//                                }
+//                            }).appendTo('body');
+//       
+//            $(document).mousemove(function(e){
+//                ghostbar.css("top",e.pageY+2);
+//            });
+//        });
+//
+//        $(document).mouseup(function(e){
+//        if (dragging) 
+//        {
+//           $('#map').css("height",e.pageY+2);
+//           $('#pano').css("top",e.pageY+2);
+//           $('#ghostbar').remove();
+//           $(document).unbind('mousemove');
+//           dragging = false;
+//        }
+//    });
     
     // Drag Code End
     
@@ -235,7 +235,7 @@ function initializeStreetView(coords) {
     map.setStreetView(panorama);
 }
 
-function onReturnButton()
+function onHomeButton()
 {
     //var inputs = getInputs();
     var url = 'http://localhost:5000/';

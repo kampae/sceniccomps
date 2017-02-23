@@ -1,34 +1,30 @@
-  html, body {
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-  }
-
-  #map {
-    height: 75%;
+    overflow: hidden;
+}
+#map {
+    height: 72%;
     float: top;
 }
-
-
 #rightpanel{
     overflow: auto;
     width: 390px;
     height: 100%;
     float: right;
 }
-
 #border{
-    height: 30%;
-/*    height: 25%;*/
-    /*float: right;*/
+/*    height: 30%;*/
+    height: 25%;
+    float: right;
 /*    width: 390px;*/
     width: 390px;
     background-color: #7DC43A;
 }
-
 #myroute{
-/*    height: 21%;*/
-    height: 25%;
+    height: 21%;
+/*    height: 25%;*/
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
@@ -41,9 +37,17 @@
     background-color: white;
     text-align: center;
 }
-
 #logo{
     height: 100px;
+}
+#home{
+    height: 20px;
+    position: relative;
+    top: -80px;
+    right: -40px;
+}
+#home:hover{
+    opacity: 0.3;
 }
 
 #goScenic{
@@ -55,53 +59,22 @@
     font-size: large;
     margin-top: 5px;
 }
-
-#returnbutton{
-    margin-top: 10px;
-    width: 150px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#return {
-    height: 35px;  
-    width: 160px;
-    border-radius: 35px;
-    font-size: 20px;
-    font-family: Ariel;
-    font-weight: bold;
-    
-/*    White button*/
-    background: white;
-    color: #4C537D;
-    box-shadow: 1px 1px darkslategray;
-}
-
 #directions{
-
-    /* Controls panel compactness */
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
-    height: 70%;
-/*    height: 75%;*/
+    height: 75%;
     float: right;
     width: 390px;
     overflow: auto;
 }
-  
 #directions select {
     width: 100%;
 }
-
-
 #pano {
-/*     float: left; */
     float: bottom;
-    height: 25%;
-/*    width: 100%;*/
+    height: 28%;
 } 
-
 #adp-placemark img, .adp-placemark img {
    display:none;
 }

@@ -129,8 +129,8 @@ def read_classified_points(file_name, scenery_type, start, end, time):
             if coord_in_range(coordinates, corners):
                 classified_coord_list.append(coordinates)
     
-    #print("BEFORE: ", count)
-    #print("AFTER: ", len(classified_coord_list))
+    print("BEFORE: ", count)
+    print("AFTER: ", len(classified_coord_list))
     return classified_coord_list
 
 
@@ -305,12 +305,19 @@ def get_waypoints(start, end, scenery, hours, minutes):
     
     threshold = 1
     
+    #need to fiddle around with starting values for very high number of coords
+    if len(coordinates) > 2000:
+        threshold = 8
+    
     reduced_coordinates, clusters = cluster_coordinates(coordinates, threshold)
     
-    while len(reduced_coordinates > 100):
-        threshold += 2
+    while len(reduced_coordinates) > 80:
+        print("LENGTH LENGTH LENGTH: ", len(reduced_coordinates))
+        threshold += 1
+        print("THRESHOLD THRESHOLD: ", threshold)
         reduced_coordinates, clusters = cluster_coordinates(coordinates, threshold)
-        
+    
+    print("LENGTH LENGTH LENGTH: ", len(reduced_coordinates))   
     reduced_coordinates.append(end_coordinate)
     reduced_coordinates.insert(0, start_coordinate)
     
