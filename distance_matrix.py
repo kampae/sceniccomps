@@ -262,11 +262,6 @@ def calc_distance(item, end):
 
 
 
-
-def order_clusters(cluster, end):
-    ordered = sorted(cluster, key = lambda coord: calc_distance(coord, end), reverse = True)
-    return ordered
-
 def calc_distance(item, end):
     coord = item.split(", ")
     coord[0] = float(coord[0])

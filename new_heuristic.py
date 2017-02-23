@@ -1,7 +1,7 @@
 import sys
 import simplejson
-from urllib.request import urlopen
-#from urllib2 import urlopen
+#from urllib.request import urlopen
+from urllib2 import urlopen
 import os
 from geopy.distance import vincenty
 import pulp
@@ -80,7 +80,7 @@ finds the total length of the path created by a list of coordinates
 def path_length(path):
     total_distance = 0;
     for i in range(1, len(path)):
-        total_distance = total_distance + ((1.3*vincenty(path[i-1], path[i]).km))
+        total_distance = total_distance + ((1.4*vincenty(path[i-1], path[i]).km) + 6.0842)
     return total_distance
 
 '''
@@ -256,7 +256,8 @@ def remove_point(k, op):
 
 def orienteering_heuristic(start, end, coordinates, max_time):
     #initialization
-    farthest_points_list, r_coordinates= farthest_points(start, end, coordinates, 10, max_time)
+    num_far_points = min(10, len(coordinates))
+    farthest_points_list, r_coordinates= farthest_points(start, end, coordinates, num_far_points, max_time)
     paths = create_paths(start, end, farthest_points_list, max_time, r_coordinates)
     
     op_index = 0
@@ -274,16 +275,27 @@ def orienteering_heuristic(start, end, coordinates, max_time):
     op, nop = two_point_exchange(op_path, paths, max_time, end)
     op, nop = one_point_movement(op, nop, max_time, end)
     op, nop = reinitialization(op, nop, max_time, coordinates, end)
+    
+    print("len nop")
+    for x in nop:
+        print(len(x))
+        
+    ordered_op = order_route(end, op)
+#    print("improve 2")
+#    # #improvement round two
+#    op, nop = two_point_exchange(op, nop, max_time, end)
+#    op, nop = one_point_movement(op, nop, max_time, end)
+#    op, nop = reinitialization(op, nop, max_time, coordinates, end)
 
-    print("improve 2")
-    # #improvement round two
-    op, nop = two_point_exchange(op, nop, max_time, end)
-    op, nop = one_point_movement(op, nop, max_time, end)
-    op, nop = reinitialization(op, nop, max_time, coordinates, end)
+    return ordered_op
 
-    return op
+def order_route(end, coordinates):
+    ordered = sorted(coordinates, key = lambda coord: distance_to_end(coord, end), reverse = True)
+    
+    return ordered
 
-
+def distance_to_end(item, end):
+    return vincenty(item, end).km
 def check(op, nop):
     for i in range(1, len(op)-1):
         for p in nop:
@@ -291,10 +303,38 @@ def check(op, nop):
                 print("NO!")
 
 
+'''def reduce_path(path, max_time):
+    path_time = new_heuristic.path_length(path)
+    while(path_time > max_time):
+        path = new_heuristic.remove_point(1, path)
+        path_time = new_heuristic.path_length(path)
+    return path'''
 
+'''
+def call_new_heuristic(start, end, scenery, hours, minutes):
+    api_key = 'AIzaSyDwkDK5bzGkwnkUz_0HtSs6Ab6NYq83-zQ'
+    urlstring1 = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + start + "&key=" +api_key
+    start_info = simplejson.load(urlopen(urlstring1))
+    start_coordinate = [start_info['results'][0].get("geometry").get("location").get("lat"), start_info['results'][0].get("geometry").get("location").get("lng")]
+    
+    urlstring2 = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + end + "&key=" + api_key
+    end_info = simplejson.load(urlopen(urlstring2))
+    end_coordinate = [end_info['results'][0].get("geometry").get("location").get("lat"), end_info['results'][0].get("geometry").get("location").get("lng")]
+    
+    time = (int(hours)*60 + int(minutes))
+    
+    coordinates = read_classified_points("ClassifiedPoints/all_classified_points.csv", scenery, start_coordinate, end_coordinate, time)
+    
+    coordinates.append(end_coordinate)
+    coordinates.insert(0, start_coordinate)
+    
+    route = new_heuristic.orienteering_heuristic(start_coordinate, end_coordinate, coord_list, time)
+    
+    return route
+'''
 
-start = [47.638134, -122.304230]
-end =  [47.951772, -124.384314]
-max_distance = 250
-coord_list = read_classified_points("all_classified_points.csv", 'water', start, end, max_distance)
-print(orienteering_heuristic(start, end, coord_list, max_distance))
+#start = [47.638134, -122.304230]
+#end =  [47.951772, -124.384314]
+#max_distance = 250
+#coord_list = read_classified_points("all_classified_points.csv", 'water', start, end, max_distance)
+#print(orienteering_heuristic(start, end, coord_list, max_distance))
