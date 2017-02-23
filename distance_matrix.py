@@ -113,27 +113,26 @@ def read_classified_points(file_name, scenery_type, start, end, time):
     count = 0
     classified_coord_list = []
     corners = find_relevant_area.find_relevant_area([start, end], time)
-    
+
     with open(file_name, 'r') as f:
         input_lines = f.read().splitlines()
-        
+
     for x in input_lines:
         new_line = x.replace("[", "")
         new_line = new_line.replace("]", "")
-        new_line = new_line.replace(",", "")
         new_line = new_line.replace('\'', "")
-        line_list = new_line.split()
-        
-        if(line_list[2] == scenery_type or line_list[4] == scenery_type or line_list[6]==scenery_type):
+        line_list = new_line.split(",")
+
+        if(line_list[2][1:] == scenery_type or line_list[4][1:] == scenery_type or line_list[6][1:]==scenery_type):
             count += 1
             coordinates = [float(line_list[0]), float(line_list[1])]
             if coord_in_range(coordinates, corners):
                 classified_coord_list.append(coordinates)
     
-    print("BEFORE: ", count)
-    print("AFTER: ", len(classified_coord_list))
-    
+    #print("BEFORE: ", count)
+    #print("AFTER: ", len(classified_coord_list))
     return classified_coord_list
+
 
 '''
 Checks if passed coord is in the relevant area, given the start and end coordinates
