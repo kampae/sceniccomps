@@ -14,7 +14,7 @@ import find_relevant_area
 
 '''
 Uses google maps distance API to calculate the road distances between points in coordinates. Only includes distances between
-two points a and b in matrix if moving from a to b moves closer to the endpoint.
+two points a and b in matrix if moving from a to b moves closer to the endpoint. NOT BEING USED CURRENTLY
 '''
 def get_distances(coordinates, final, matrix):
     api_key = 'AIzaSyBpaOfrcYIpU-7jb-M4zOAyHgBpzoPEoqg'
@@ -80,7 +80,7 @@ def get_crow_distance_matrix(coordinates, final, matrix):
                     points = (s, e)
                     matrix[points] = result_time
                     
-    return matrix, names_list
+    return matrix, names_list, clusters
 
 def cluster_coordinates(coordinates):
     threshold = 15
@@ -207,7 +207,6 @@ Takes the subset of coordinates produced by the ILP and returns them in the orde
 in which they will be visited.
 '''
 def order_output(output_list, start, end, clusters):
-    print("in order output")
     if(len(output_list) <2):
         start_list = start.split(", ")
         start_list[0] = float(start_list[0])
@@ -247,6 +246,22 @@ def order_output(output_list, start, end, clusters):
             output_list.append(coordinates)
             
     return output_list
+
+
+def order_clusters(cluster, end):
+    ordered = sorted(cluster, key = lambda coord: calc_distance(coord, end), reverse = True)
+    return ordered
+
+def calc_distance(item, end):
+    coord = item.split(", ")
+    coord[0] = float(coord[0])
+    coord[1] = float(coord[1])
+    end_list = end.split(", ")
+    end_list[0] = float(end_list[0])
+    end_list[1] = float(end_list[1])
+    return vincenty(coord, end_list).km
+
+
 
 
 def order_clusters(cluster, end):
@@ -311,9 +326,9 @@ def get_waypoints(start, end, scenery, hours, minutes):
     print(string_start, string_end)
     list_of_points = order_output(output_list, string_start, string_end, clusters)
     print(len(list_of_points), "************")
+
     
 #    print(min(dist_dictionary.values()))
 #    print(max(dist_dictionary.values()))
     
     return list_of_points
-
