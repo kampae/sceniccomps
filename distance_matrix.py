@@ -61,7 +61,6 @@ two points a and b in matrix if moving from a to b moves closer to the endpoint.
 '''
 def get_crow_distance_matrix(coordinates, final, matrix):
     names_list = []
-    
     for i in range(0, len(coordinates)):
         destinations = ""
         destination_list = []
@@ -70,18 +69,41 @@ def get_crow_distance_matrix(coordinates, final, matrix):
         
         for j in range(0, len(coordinates)):
             if i != j:
-                distance1 = vincenty(coordinates[i], final).miles
-                distance2 = vincenty(coordinates[j], final).miles
+                distance1 = vincenty(coordinates[i], final).km
+                distance2 = vincenty(coordinates[j], final).km
                 
                 if distance2 <= distance1:
                     result_distance = vincenty(coordinates[i], coordinates[j]).km
-                    result_time = result_distance*60
+                    result_time = (result_distance*1.4) + 6.0824 #(result_distance*1.875)+17.967
                     s = str(coordinates[i][0]) + ", " + str(coordinates[i][1])
                     e = str(coordinates[j][0]) + ", " + str(coordinates[j][1])
                     points = (s, e)
                     matrix[points] = result_time
                     
     return matrix, names_list
+
+def cluster_coordinates(coordinates):
+    threshold = 15
+    clusters = {}
+    reduced_coordinates = []
+    in_cluster = []
+    for i in range(1, len(coordinates)-2):
+        s = str(coordinates[i][0]) + ", " + str(coordinates[i][1])
+        if(s not in in_cluster):
+            reduced_coordinates.append(coordinates[i])
+            for j in range(i+1, len(coordinates)-1):
+                distance = vincenty(coordinates[i], coordinates[j]).km
+                e = str(coordinates[j][0]) + ", " + str(coordinates[j][1])
+                if(distance < threshold):
+                    in_cluster.append(e)
+                    if s in clusters:
+                        existing_cluster = clusters[s]
+                        existing_cluster.append(e)
+                        clusters[s] = existing_cluster
+                    else:
+                        clusters[s] = [e]   
+            
+    return reduced_coordinates, clusters
 
 '''
 Reads from a file of classified road coordinates and creates a list of only coordinates
@@ -108,8 +130,9 @@ def read_classified_points(file_name, scenery_type, start, end, time):
             if coord_in_range(coordinates, corners):
                 classified_coord_list.append(coordinates)
     
-    #print("BEFORE: ", count)
-    #print("AFTER: ", len(classified_coord_list))
+    print("BEFORE: ", count)
+    print("AFTER: ", len(classified_coord_list))
+    
     return classified_coord_list
 
 '''
@@ -140,12 +163,12 @@ Takes in a list of coordinates and a max distance and uses an ILP to find a subs
 of coordinates to visit. Tries to maximize the size of the subset without exceeding
 the max time.
 '''
-def route_ilp(dist, coord_names, max_dist):
+def route_ilp(dist, coord_names, max_dist, clusters):
 
     y = pulp.LpVariable.dicts("y", dist, lowBound=0, upBound=1, cat=pulp.LpInteger)
     mod = pulp.LpProblem("Scenic Routes", pulp.LpMaximize)
     # Objective
-    mod += sum([y[k] for k in dist])
+    mod += sum([y[k]*(len(clusters[k[1]])+1) for k in dist])
 
     # CONSTRAINTS:
 
@@ -169,9 +192,12 @@ def route_ilp(dist, coord_names, max_dist):
     # Solve
     mod.solve()
     edge_list = []
+    time_sum = 0
     for t in dist:
         if(y[t].value() == 1):
             edge_list.append(t)
+            time_sum = time_sum + dist[t]
+    print(time_sum, "!!!!!!!*******")
     
     return edge_list
 
@@ -180,7 +206,8 @@ def route_ilp(dist, coord_names, max_dist):
 Takes the subset of coordinates produced by the ILP and returns them in the order
 in which they will be visited.
 '''
-def order_output(output_list, start, end):
+def order_output(output_list, start, end, clusters):
+    print("in order output")
     if(len(output_list) <2):
         start_list = start.split(", ")
         start_list[0] = float(start_list[0])
@@ -199,14 +226,43 @@ def order_output(output_list, start, end):
                 coord_list[0] = float(coord_list[0])
                 coord_list[1] = float(coord_list[1])
                 ordered_output.append(coord_list)
+                if(len(clusters[x[0]]) > 0):
+                    ordered = order_clusters(clusters[x[0]], end)
+                    for o in ordered:
+                        o_coord = o.split(", ")
+                        o_coord[0] = float(o_coord[0])
+                        o_coord[1] = float(o_coord[1])
+                        ordered_output.append(o_coord)
                 start = x[1]
     
     coord_list = start.split(", ")
     coord_list[0] = float(coord_list[0])
     coord_list[1] = float(coord_list[1])
     ordered_output.append(coord_list)
+    print("@@@@@@@@@@@@@@@", len(ordered_output))
     
-    return ordered_output
+    output_list = []
+    for coordinates in ordered_output:
+        if coordinates not in output_list:
+            output_list.append(coordinates)
+            
+    return output_list
+
+
+def order_clusters(cluster, end):
+    ordered = sorted(cluster, key = lambda coord: calc_distance(coord, end), reverse = True)
+    return ordered
+
+def calc_distance(item, end):
+    coord = item.split(", ")
+    coord[0] = float(coord[0])
+    coord[1] = float(coord[1])
+    end_list = end.split(", ")
+    end_list[0] = float(end_list[0])
+    end_list[1] = float(end_list[1])
+    return vincenty(coord, end_list).km
+
+
 
 '''
 Converts the inputs into the necessary format (ex. addresses to coordinates) and creates the distance_matrix,
@@ -223,27 +279,38 @@ def get_waypoints(start, end, scenery, hours, minutes):
     end_coordinate = [end_info['results'][0].get("geometry").get("location").get("lat"), end_info['results'][0].get("geometry").get("location").get("lng")]
     
    
-    time = (int(hours)*60 + int(minutes))*60
+    time = (int(hours)*60 + int(minutes))
     #corners = find_relevant_area.find_relevant_area([start_coordinate, end_coordinate], time)
 
-    coordinates = read_classified_points("ClassifiedPoints/classified_points14400_Tester.csv", scenery, start_coordinate, end_coordinate, time)
+    coordinates = read_classified_points("ClassifiedPoints/all_classified_points.csv", scenery, start_coordinate, end_coordinate, time)
             
     
     coordinates.append(end_coordinate)
     coordinates.insert(0, start_coordinate)
     print("!!!!!!!", len(coordinates))
     
+    reduced_coordinates, clusters = cluster_coordinates(coordinates)
+    reduced_coordinates.append(end_coordinate)
+    reduced_coordinates.insert(0, start_coordinate)
+    
+    print("!!^!!!!", len(reduced_coordinates))
+        
     w, h = len(coordinates), len(coordinates)
     distances = {}
-    matrix = [[0 for x in range(w)] for y in range(h)]
-    dist_dictionary, names_list = get_crow_distance_matrix(coordinates, end_coordinate, distances)
-    max_distance = time
-    output_list = route_ilp(dist_dictionary, names_list, max_distance)
+    dist_dictionary, names_list = get_crow_distance_matrix(reduced_coordinates, end_coordinate, distances)
+    
+    for coord in coordinates:
+        lat_lng = str(coord[0]) + ', ' + str(coord[1])
+        if lat_lng not in clusters:
+            clusters[lat_lng] = []
+    
+    output_list = route_ilp(dist_dictionary, names_list, time, clusters)
+    print(output_list)
     string_start = str(start_coordinate[0]) + ", " + str(start_coordinate[1])
     string_end = str(end_coordinate[0]) + ", " + str(end_coordinate[1])
-    list_of_points = order_output(output_list, string_start, string_end)
-    
-    #print(len(list_of_points), "************")
+    print(string_start, string_end)
+    list_of_points = order_output(output_list, string_start, string_end, clusters)
+    print(len(list_of_points), "************")
     
 #    print(min(dist_dictionary.values()))
 #    print(max(dist_dictionary.values()))

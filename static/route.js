@@ -121,9 +121,17 @@ function processRequests()
         if (status == google.maps.DirectionsStatus.OK)
         {
             renderArray[i] = new google.maps.DirectionsRenderer({
-                suppressMarkers: true,
-                //suppressInfoWindows: true,
+//                suppressMarkers: true,
+                suppressInfoWindows: true,
+                markerOptions: {
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 2,
+                    strokeColor: 'purple'
+                }}
             });
+            
+            //renderArray[i] = new google.maps.DirectionsRenderer();
             
             for (var j = 0; j < result["routes"][0]["legs"].length; j++)
             {
@@ -180,3 +188,16 @@ function initializeStreetView(coords) {
         });
     map.setStreetView(panorama);
 }
+
+function onReturnButton()
+{
+    //var inputs = getInputs();
+    var url = 'http://localhost:5000/';
+    window.location.href="http://localhost:5000/";
+    
+//    xmlHttpRequest = new XMLHttpRequest();
+//    xmlHttpRequest.open('get', url);
+//    
+//    xmlHttpRequest.send(null);
+}
+

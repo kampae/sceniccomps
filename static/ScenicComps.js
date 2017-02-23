@@ -23,8 +23,8 @@ function setBadinput(badInput)
     }
         if(badInput == 3)
     {
-        document.getElementById('badinput').style.display = 'block';
-        document.getElementById('badinput').innerHTML += "Your destination cannot be reached in the provided time limit.";
+        document.getElementById('badinputTime').style.display = 'block';
+        document.getElementById('badinputTime').innerHTML += "Your destination cannot be reached in the provided time limit.";
     }
 }
 

@@ -91,6 +91,9 @@
  <div id = "badinput" hidden="true">
     <img src="/static/warning.png" style="width: 20px; height: 20px;" />
 </div>   
+ <div id = "badinputTime" hidden="true">
+    <img src="/static/warning.png" style="width: 20px; height: 20px;" />
+</div>  
 
 <!--
 <div class = "badinput" id = "badstart" hidden="true">
@@ -112,9 +115,11 @@
 <div id="box">
     <div id = "startend">
     <div id="start" class="loc_box">
+        <span class = "hoverinfo" id = "starthover"> Please enter a start address for your route.</span>
         <p><input id="start_input" class="locations" type="text" placeholder="Start Location" name = 'startpoint' value = "{{start}}" required></p>
     </div>
         <div id="end" class="loc_box">
+        <span class = "hoverinfo" id = "endhover"> Please enter an end address for your route.</span>            
         <p><input id="end_input" class="locations" type="text" placeholder="End Location" name='endpoint' value = "{{end}}" required></p>
     </div>
     </div>
@@ -123,16 +128,18 @@
             <input id="hours_input" class = "time_input" type = "number" min = "0" max = "99" name="hours" value = "{{hours}}" required>               Hours
             <input id="minutes_input" class = "time_input" type = "number" min = "0" max = "59" name= "minutes" value = "{{minutes}}" required>
             Minutes
+            <span class = "hoverinfo" id = "timehover"> How much time do you have to spend on this road trip?</span>
         </div>
         
         <div id="scenery">
+            <span class = "hoverinfo" id = "sceneryhover"> What is your preferred scenery?</span>
             <p id="sceneryp"><select id = "scenery_select" name='scenery' required>
                 <option value="">Select Scenery</option>
                 <option value="mountain">Mountains</option>
                 <option value="water">Water</option>
                 <option value="fields">Fields</option>
                 <option value="nature and woods">Nature and Woods</option>
-                <option value="non-scenic">Non-Scenic</option>
+<!--                <option value="non-scenic">Non-Scenic</option>-->
                 <option value="sightseeing">Sightseeing</option>
                 
             </select></p>

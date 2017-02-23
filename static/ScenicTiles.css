@@ -76,6 +76,17 @@ h2 {
     font-size: 15.5px;
     text-align: center;
     color: red;
+/*    new updates*/
+    position: fixed;
+    left: 43.5%;
+}
+#badinputTime{
+    font-size: 15.5px;
+    text-align: center;
+    color: red;
+/*    new updates*/
+    position: fixed;
+    left: 39%;
 }
 #box{
     width: 500px;
@@ -147,7 +158,46 @@ h2 {
   background-image: url(road4.jpg);
   padding: 10px;
 }
-
+.hoverinfo {
+    visibility: hidden;
+    width: 250px;
+    background-color: gray;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#starthover{
+    bottom: 56.5%;   
+}
+#endhover{
+    bottom: 48.5%;   
+}
+#timehover, #sceneryhover {
+    bottom: 41.5%;   
+}
+/*
+#sceneryhover{
+    bottom: 41.5%;   
+}
+*/
+#time:hover .hoverinfo, #scenery:hover .hoverinfo, #start:hover .hoverinfo, #end:hover .hoverinfo{
+    visibility: visible;
+}
+#start .hoverinfo::after, #end .hoverinfo::after, #time .hoverinfo::after, #scenery .hoverinfo::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 10%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: gray transparent transparent transparent;
+}
 
 
 

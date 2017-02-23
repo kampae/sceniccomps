@@ -1,9 +1,9 @@
 def combine_files():
     
-    combined_file = open("all_classified_points.csv", "w")
+    combined_file = open("subset.csv", "w")
     combined_file_string = ""
     
-    for i in range(0,72):
+    for i in range(1,11):
         f_name = "classified_points" + str((i*2400)) +".csv"
         f = open(f_name, "r")
         print(f_name)

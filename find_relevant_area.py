@@ -10,7 +10,9 @@ Main function: take start and end points and max time willing to travel as input
                returns the coordinates of the four corners of the bounding square
 '''
 def find_relevant_area(points, max_time):
-    max_time = (max_time/60)/60;
+    
+    max_time = max_time/60.0;
+    print("MAX TIME: ", max_time)
     # Initializes values needed for the start/end points
     start_point = points[0]
     end_point = points[1]
@@ -27,10 +29,13 @@ def find_relevant_area(points, max_time):
 
     # Converts max time to max distance using the assumption time is communicated in mins and
         # you will not be traveling greater than 55mph on average
-    max_dist = 55/60 * max_time
+    max_dist = 55.0/60 * max_time #((max_time - 6.0824)/1.4)*60.0
+    print("Max distance in find relevant: ", max_dist)
+    #55.0/60 * max_time
     
     # Finds the distance between the start and end points
     dist_between_points = find_dist_between_pts(start_point, end_point)
+    print("start to end distance ", dist_between_points)
     
     # Finds the slope of the line between the start and end points, and the slope perpendicular to that
     if (By - Ay) == 0:
@@ -86,7 +91,7 @@ def find_relevant_area(points, max_time):
         top_left = (Cx - perp_hdiff, Cy + perp_vdiff)
         
     corners = [bottom_left, bottom_right, top_right, top_left]
-    
+    print("CORNERS: ", corners)
     return corners
     
 '''
