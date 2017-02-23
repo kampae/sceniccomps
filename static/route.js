@@ -41,7 +41,53 @@ function initMap()
         position: {lat: waypoints[waypoints.length - 1][0], lng: waypoints[waypoints.length - 1][1]},
         map: map,
         label: 'B'
-    }); 
+    });
+    
+    // Drag Code Start
+    var i = 0;
+    var dragging = false;
+        $('#dragbar').mousedown(function(e){
+            e.preventDefault();
+       
+            dragging = true;
+            var pano = $('#pano');
+            var dragbar = $("#dragbar");
+            var ghostbar = $('<div>',
+                            {id:'ghostbar',
+                            css: {
+                                height: dragbar.outerHeight(),
+                                width: dragbar.outerWidth(),
+                                top: pano.offset().top,
+                                bottom: pano.offset().bottom
+                                }
+                            }).appendTo('body');
+       
+            $(document).mousemove(function(e){
+                ghostbar.css("top",e.pageY+2);
+            });
+        });
+
+        $(document).mouseup(function(e){
+        if (dragging) 
+        {
+           $('#map').css("height",e.pageY+2);
+           $('#pano').css("top",e.pageY+2);
+           $('#ghostbar').remove();
+           $(document).unbind('mousemove');
+           dragging = false;
+        }
+    });
+    
+    // Drag Code End
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 

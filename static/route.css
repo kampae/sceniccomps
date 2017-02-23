@@ -105,3 +105,27 @@
 #adp-placemark img, .adp-placemark img {
    display:none;
 }
+#dragbar{
+    background-color: black;
+    height: 5px;
+    float: left;
+    width: 100%;
+    cursor: row-resize;
+}
+#ghostbar{
+    width: 3px;
+    background-color: #000;
+    opacity: 0.5;
+    position: absolute;
+    cursor: row-resize;
+    z-index: 999;
+}
+
+
+
+
+
+
+
+
+
