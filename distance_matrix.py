@@ -82,8 +82,8 @@ def get_crow_distance_matrix(coordinates, final, matrix):
                     
     return matrix, names_list
 
-def cluster_coordinates(coordinates):
-    threshold = 15
+def cluster_coordinates(coordinates, threshold):
+    #threshold = 15
     clusters = {}
     reduced_coordinates = []
     in_cluster = []
@@ -303,7 +303,14 @@ def get_waypoints(start, end, scenery, hours, minutes):
     coordinates.insert(0, start_coordinate)
     print("!!!!!!!", len(coordinates))
     
-    reduced_coordinates, clusters = cluster_coordinates(coordinates)
+    threshold = 1
+    
+    reduced_coordinates, clusters = cluster_coordinates(coordinates, threshold)
+    
+    while len(reduced_coordinates > 100):
+        threshold += 2
+        reduced_coordinates, clusters = cluster_coordinates(coordinates, threshold)
+        
     reduced_coordinates.append(end_coordinate)
     reduced_coordinates.insert(0, start_coordinate)
     
