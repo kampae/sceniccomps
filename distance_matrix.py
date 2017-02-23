@@ -80,7 +80,7 @@ def get_crow_distance_matrix(coordinates, final, matrix):
                     points = (s, e)
                     matrix[points] = result_time
                     
-    return matrix, names_list, clusters
+    return matrix, names_list
 
 def cluster_coordinates(coordinates):
     threshold = 15
