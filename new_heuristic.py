@@ -119,7 +119,7 @@ if the coordinate can replace a coordinate in the path such that the path decrea
 then the functions returns the optimal place to put the coordinate
 '''
 def min_location(coordinate, path, end):
-    distance_decrease = -10000000
+    distance_decrease = 0
     min_place = -1
     for j in range(1, len(path)-1):
         current_distance = vincenty(path[j-1], path[j]).km
@@ -127,6 +127,7 @@ def min_location(coordinate, path, end):
         changed_distance = current_distance-new_distance
         distance_to_end = vincenty(path[j-1], end).km
         new_distance_to_end = vincenty(coordinate, end).km
+        
         if(changed_distance > distance_decrease and (coordinate not in path) and (new_distance_to_end<distance_to_end)):
             distance_decrease = changed_distance
             min_place = j
@@ -184,7 +185,7 @@ def two_point_exchange(op, nop, coordinates, end):
                             best_nop = x
                             nop_index = nop_loc
                             best_improvement = nop_change
-                    if((op_improvement + best_improvement) > 0 and (nop[k][i] not in new_op) and (op[j] not in nop[best_nop])):
+                    if((op_improvement > 0) and (nop[k][i] not in new_op) and (op[j] not in nop[best_nop])):
                         moved_coordinate = op[j]
                         new_op.insert(op_index, nop[k][i])
                         changed_nop = nop[best_nop].insert(nop_index, moved_coordinate)
@@ -273,6 +274,7 @@ def orienteering_heuristic(start, end, coordinates, max_time):
     print("start improve ", len(op_path))
     #improvement round one
     op, nop = two_point_exchange(op_path, paths, max_time, end)
+    print("after 2 point ", len(op))
     op, nop = one_point_movement(op, nop, max_time, end)
     op, nop = reinitialization(op, nop, max_time, coordinates, end)
     
@@ -303,35 +305,8 @@ def check(op, nop):
                 print("NO!")
 
 
-'''def reduce_path(path, max_time):
-    path_time = new_heuristic.path_length(path)
-    while(path_time > max_time):
-        path = new_heuristic.remove_point(1, path)
-        path_time = new_heuristic.path_length(path)
-    return path'''
 
-'''
-def call_new_heuristic(start, end, scenery, hours, minutes):
-    api_key = 'AIzaSyDwkDK5bzGkwnkUz_0HtSs6Ab6NYq83-zQ'
-    urlstring1 = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + start + "&key=" +api_key
-    start_info = simplejson.load(urlopen(urlstring1))
-    start_coordinate = [start_info['results'][0].get("geometry").get("location").get("lat"), start_info['results'][0].get("geometry").get("location").get("lng")]
-    
-    urlstring2 = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + end + "&key=" + api_key
-    end_info = simplejson.load(urlopen(urlstring2))
-    end_coordinate = [end_info['results'][0].get("geometry").get("location").get("lat"), end_info['results'][0].get("geometry").get("location").get("lng")]
-    
-    time = (int(hours)*60 + int(minutes))
-    
-    coordinates = read_classified_points("ClassifiedPoints/all_classified_points.csv", scenery, start_coordinate, end_coordinate, time)
-    
-    coordinates.append(end_coordinate)
-    coordinates.insert(0, start_coordinate)
-    
-    route = new_heuristic.orienteering_heuristic(start_coordinate, end_coordinate, coord_list, time)
-    
-    return route
-'''
+
 
 #start = [47.638134, -122.304230]
 #end =  [47.951772, -124.384314]

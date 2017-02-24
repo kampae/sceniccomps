@@ -10,6 +10,7 @@ import pulp
 #import caffe_3images
 #import caffe_gsv_3images
 import find_relevant_area
+import new_heuristic
 
 
 '''
@@ -153,7 +154,12 @@ def coord_in_range(coord, corners):
     min_y = min(y)
     max_y = max(y)
 
-    return not(coord[0] < min_x or coord[0] > max_x or coord[1] < min_y or coord[1] > max_y)
+    outside_square = coord[0] < min_x or coord[0] > max_x or coord[1] < min_y or coord[1] > max_y
+    in_top_canada = (coord[0] > 48.395038) and (coord[1] < -123.149298)
+    in_bottom_canada = (coord[0] > 48.303611) and (coord[1] > -124.001312) and (coord[1] < -123.471909)
+    in_canada = in_top_canada or in_bottom_canada
+    
+    return (not outside_square) and (not in_canada)
 
 
 
@@ -205,7 +211,7 @@ def route_ilp(dist, coord_names, max_dist, clusters):
 Takes the subset of coordinates produced by the ILP and returns them in the order
 in which they will be visited.
 '''
-def order_output(output_list, start, end, clusters):
+def order_output(output_list, start, end, clusters, time):
     if(len(output_list) <2):
         start_list = start.split(", ")
         start_list[0] = float(start_list[0])
@@ -243,24 +249,23 @@ def order_output(output_list, start, end, clusters):
     for coordinates in ordered_output:
         if coordinates not in output_list:
             output_list.append(coordinates)
-            
-    return output_list
+    
+    reduced_output_list = reduce_path(output_list, time)
+    
+    return reduced_output_list
 
 
 def order_clusters(cluster, end):
     ordered = sorted(cluster, key = lambda coord: calc_distance(coord, end), reverse = True)
     return ordered
 
-def calc_distance(item, end):
-    coord = item.split(", ")
-    coord[0] = float(coord[0])
-    coord[1] = float(coord[1])
-    end_list = end.split(", ")
-    end_list[0] = float(end_list[0])
-    end_list[1] = float(end_list[1])
-    return vincenty(coord, end_list).km
-
-
+def reduce_path(path, max_time):
+    path_time = new_heuristic.path_length(path)
+    while(path_time > max_time):
+        print("$$$$$$$$$$$removing a point")
+        path = new_heuristic.remove_point(1, path)
+        path_time = new_heuristic.path_length(path)
+    return path
 
 def calc_distance(item, end):
     coord = item.split(", ")
@@ -272,6 +277,37 @@ def calc_distance(item, end):
     return vincenty(coord, end_list).km
 
 
+
+def calc_distance(item, end):
+    coord = item.split(", ")
+    coord[0] = float(coord[0])
+    coord[1] = float(coord[1])
+    end_list = end.split(", ")
+    end_list[0] = float(end_list[0])
+    end_list[1] = float(end_list[1])
+    return vincenty(coord, end_list).km
+
+
+def call_new_heuristic(start, end, scenery, hours, minutes):
+    api_key = 'AIzaSyDwkDK5bzGkwnkUz_0HtSs6Ab6NYq83-zQ'
+    urlstring1 = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + start + "&key=" +api_key
+    start_info = simplejson.load(urlopen(urlstring1))
+    start_coordinate = [start_info['results'][0].get("geometry").get("location").get("lat"), start_info['results'][0].get("geometry").get("location").get("lng")]
+    
+    urlstring2 = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + end + "&key=" + api_key
+    end_info = simplejson.load(urlopen(urlstring2))
+    end_coordinate = [end_info['results'][0].get("geometry").get("location").get("lat"), end_info['results'][0].get("geometry").get("location").get("lng")]
+    
+    time = (int(hours)*60 + int(minutes))
+    
+    coordinates = read_classified_points("ClassifiedPoints/all_classified_points.csv", scenery, start_coordinate, end_coordinate, time)
+    
+    coordinates.append(end_coordinate)
+    coordinates.insert(0, start_coordinate)
+    
+    route = new_heuristic.orienteering_heuristic(start_coordinate, end_coordinate, coordinates, time)
+    
+    return route
 
 '''
 Converts the inputs into the necessary format (ex. addresses to coordinates) and creates the distance_matrix,
@@ -332,7 +368,7 @@ def get_waypoints(start, end, scenery, hours, minutes):
     string_start = str(start_coordinate[0]) + ", " + str(start_coordinate[1])
     string_end = str(end_coordinate[0]) + ", " + str(end_coordinate[1])
     print(string_start, string_end)
-    list_of_points = order_output(output_list, string_start, string_end, clusters)
+    list_of_points = order_output(output_list, string_start, string_end, clusters, time)
     print(len(list_of_points), "************")
 
     

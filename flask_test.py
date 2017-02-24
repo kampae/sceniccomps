@@ -56,9 +56,10 @@ def view_map():
     time_valid = check_user_input.check_max_time(max_time, startpoint_url, endpoint_url)
     if not time_valid:
         return flask.render_template('ScenicTiles.html', badInput=3, start=startpoint, end=endpoint, hours=hours, minutes=minutes, scenicChoice=scenery)
-    #print(startpoint, endpoint)
-    #waypoints = distance_matrix.get_waypoints("2201+E+Newton+St,+Seattle,WA", "3324+NE+21st+Ave+Portland,OR+97212", "non-scenic", "22", "2")
+    
     waypoints = distance_matrix.get_waypoints(startpoint_url, endpoint_url, scenery, hours, minutes)
+
+    #    waypoints = distance_matrix.call_new_heuristic(startpoint_url, endpoint_url, scenery, hours, minutes)
     print("WAYPOINTS: ", waypoints)
     return flask.render_template('route.html', waypoints = waypoints)
 #    
@@ -68,4 +69,4 @@ def test(startpoint):
 
 if __name__ == "__main__":
     
-    app.run(host='localhost', port=5000, debug=True, use_reloader=True)
+    app.run(host='localhost', port=8000, debug=True, use_reloader=True)

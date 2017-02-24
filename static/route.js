@@ -238,8 +238,8 @@ function initializeStreetView(coords) {
 function onHomeButton()
 {
     //var inputs = getInputs();
-    var url = 'http://localhost:5000/';
-    window.location.href="http://localhost:5000/";
+    //var url = 'http://localhost:5000/';
+    window.location.href="http://localhost:8000/";
     
 //    xmlHttpRequest = new XMLHttpRequest();
 //    xmlHttpRequest.open('get', url);
