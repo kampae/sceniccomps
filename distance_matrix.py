@@ -346,15 +346,22 @@ def get_waypoints(start, end, scenery, hours, minutes):
     coordinates.insert(0, start_coordinate)
     print("!!!!!!!", len(coordinates))
     
-    threshold = 1
+#    threshold = 1
     
     #need to fiddle around with starting values for very high number of coords
-    if len(coordinates) > 2000:
-        threshold = 8
+#    if len(coordinates) > 2000:
+#        threshold = 8
+        
+    threshold = int(((len(coordinates))/80.0)**(50.0/67.0))
+    
+    if threshold < 1:
+        threshold = 1
+    
+    print("THRESH: ", threshold)
     
     reduced_coordinates, clusters = cluster_coordinates(coordinates, threshold)
     
-    while len(reduced_coordinates) > 80:
+    while len(reduced_coordinates) > 85:
         print("LENGTH LENGTH LENGTH: ", len(reduced_coordinates))
         threshold += 1
         print("THRESHOLD THRESHOLD: ", threshold)

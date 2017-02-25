@@ -53,9 +53,9 @@ def view_map():
     if not time_valid:
         return flask.render_template('ScenicTiles.html', badInput=3, start=startpoint, end=endpoint, hours=hours, minutes=minutes, scenicChoice=scenery)
     
-#    waypoints = distance_matrix.get_waypoints(startpoint_url, endpoint_url, scenery, hours, minutes)
+    waypoints = distance_matrix.get_waypoints(startpoint_url, endpoint_url, scenery, hours, minutes)
 
-    waypoints = distance_matrix.call_new_heuristic(startpoint_url, endpoint_url, scenery, hours, minutes) #second heuristic
+#    waypoints = distance_matrix.call_new_heuristic(startpoint_url, endpoint_url, scenery, hours, minutes) #second heuristic
     print("WAYPOINTS: ", waypoints)
     return flask.render_template('route.html', waypoints = waypoints)
 #    
