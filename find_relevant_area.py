@@ -2,7 +2,7 @@ import math
 from geopy.distance import vincenty
 import simplejson
 from urllib2 import urlopen
-#from urllib.request import urlopen
+#from urllib.request import urlopen - for python3
 
 
 '''
@@ -12,7 +12,6 @@ Main function: take start and end points and max time willing to travel as input
 def find_relevant_area(points, max_time):
     
     max_time = max_time/60.0;
-    print("MAX TIME: ", max_time)
     # Initializes values needed for the start/end points
     start_point = points[0]
     end_point = points[1]
@@ -29,13 +28,10 @@ def find_relevant_area(points, max_time):
 
     # Converts max time to max distance using the assumption time is communicated in mins and
         # you will not be traveling greater than 55mph on average
-    max_dist = 55.0/60 * max_time #((max_time - 6.0824)/1.4)*60.0
-    print("Max distance in find relevant: ", max_dist)
-    #55.0/60 * max_time
+    max_dist = 55.0/60 * max_time
     
     # Finds the distance between the start and end points
     dist_between_points = find_dist_between_pts(start_point, end_point)
-    print("start to end distance ", dist_between_points)
     
     # Finds the slope of the line between the start and end points, and the slope perpendicular to that
     if (By - Ay) == 0:
@@ -110,9 +106,7 @@ Given two points, implements the distance formula to determine the distance betw
 '''
 def find_dist_between_pts(point1, point2):
     dist_between_points = math.sqrt(((point1[0]-point2[0])**2) + ((point1[1]-point2[1])**2))
-    
-    #dist_between_points = vincenty(point1, point2).miles
-    
+        
     return dist_between_points
 
 '''

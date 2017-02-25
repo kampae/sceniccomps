@@ -1,6 +1,6 @@
 import sys
 import simplejson
-#from urllib.request import urlopen
+#from urllib.request import urlopen - for python3
 from urllib2 import urlopen
 import os
 from geopy.distance import vincenty

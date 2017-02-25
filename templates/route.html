@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <title>Route</title>
     <link rel="stylesheet" type = "text/css" href="/static/route.css"/>    
-<!--      ?version=1.1-->
       <input type="hidden" id="myVar" name="variable" value = '{{ waypoints|tojson }}'>
   </head>
     <script type="text/javascript" src="{{ url_for('static', filename='route.js') }}"></script>
@@ -15,16 +14,9 @@
     <body onload = "initMap()">
     <div id="rightpanel">
         <div id="border"><div id="myroute">
-<!--            <h1 id="goScenic">GoScenic</h1>-->
             <img id="logo" src="/static/logo2.png">
             <input type="image" src="/static/home_icon.jpg" onclick="onHomeButton()" id="home" />
-<!--            <img id="home" src="/static/home_icon.jpg">-->
             <div id="routedeets"></div>
-<!--            <div id="returnbutton">-->
-<!--
-                <button id="return" onclick="onReturnButton()">Return</button>
-            </div>
--->
         </div></div>
         <div id="directions"></div>
 

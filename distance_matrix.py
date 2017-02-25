@@ -1,13 +1,10 @@
 import sys
 import simplejson
 from urllib2 import urlopen
-#from urllib.request import urlopen
+#from urllib.request import urlopen - for python3
 import os
 from geopy.distance import vincenty
 import pulp
-#import gsv_3images
-#import caffe_3images
-#import caffe_gsv_3images
 import find_relevant_area
 import new_heuristic
 
@@ -134,8 +131,6 @@ def read_classified_points(file_name, scenery_type, start, end, time):
             if coord_in_range(coordinates, corners):
                 classified_coord_list.append(coordinates)
     
-    print("BEFORE: ", count)
-    print("AFTER: ", len(classified_coord_list))
     return classified_coord_list
 
 
@@ -276,7 +271,6 @@ is removed at each iteration
 def reduce_path(path, max_time):
     path_time = new_heuristic.path_length(path)
     while(path_time > max_time):
-        print("$$$$$$$$$$$removing a point")
         path = new_heuristic.remove_point(1, path)
         path_time = new_heuristic.path_length(path)
     return path
@@ -337,41 +331,29 @@ def get_waypoints(start, end, scenery, hours, minutes):
     
    
     time = (int(hours)*60 + int(minutes))
-    #corners = find_relevant_area.find_relevant_area([start_coordinate, end_coordinate], time)
 
     coordinates = read_classified_points("ClassifiedPoints/all_classified_points.csv", scenery, start_coordinate, end_coordinate, time)
             
     
     coordinates.append(end_coordinate)
     coordinates.insert(0, start_coordinate)
-    print("!!!!!!!", len(coordinates))
     
-#    threshold = 1
-    
-    #need to fiddle around with starting values for very high number of coords
-#    if len(coordinates) > 2000:
-#        threshold = 8
         
     threshold = int(((len(coordinates))/80.0)**(50.0/67.0))
     
     if threshold < 1:
         threshold = 1
     
-    print("THRESH: ", threshold)
     
     reduced_coordinates, clusters = cluster_coordinates(coordinates, threshold)
     
     while len(reduced_coordinates) > 85:
-        print("LENGTH LENGTH LENGTH: ", len(reduced_coordinates))
         threshold += 1
-        print("THRESHOLD THRESHOLD: ", threshold)
         reduced_coordinates, clusters = cluster_coordinates(coordinates, threshold)
     
-    print("LENGTH LENGTH LENGTH: ", len(reduced_coordinates))   
     reduced_coordinates.append(end_coordinate)
     reduced_coordinates.insert(0, start_coordinate)
     
-    print("!!^!!!!", len(reduced_coordinates))
         
     distances = {}
     dist_dictionary, names_list = get_crow_distance_matrix(reduced_coordinates, end_coordinate, distances)
@@ -386,6 +368,5 @@ def get_waypoints(start, end, scenery, hours, minutes):
     string_end = str(end_coordinate[0]) + ", " + str(end_coordinate[1])
     print(string_start, string_end)
     list_of_points = order_output(output_list, string_start, string_end, clusters, time)
-    print(len(list_of_points), "************")
     
     return list_of_points

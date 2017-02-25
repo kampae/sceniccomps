@@ -147,7 +147,6 @@ h2 {
 /*TILES*/
 #wrap {
   overflow: hidden;
-/*      margin-top: 100px;*/
   overflow: auto;
 }   
 .innerContent {
@@ -181,11 +180,6 @@ h2 {
 #timehover, #sceneryhover {
     bottom: 41.5%;   
 }
-/*
-#sceneryhover{
-    bottom: 41.5%;   
-}
-*/
 #time:hover .hoverinfo, #scenery:hover .hoverinfo, #start:hover .hoverinfo, #end:hover .hoverinfo{
     visibility: visible;
 }

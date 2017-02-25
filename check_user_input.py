@@ -1,7 +1,7 @@
 import googlemaps
 import simplejson
 from urllib2 import urlopen
-#from urllib.request import urlopen
+#from urllib.request import urlopen - for python3
 
 
 '''
