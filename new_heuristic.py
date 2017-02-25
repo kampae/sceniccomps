@@ -5,37 +5,7 @@ from urllib2 import urlopen
 import os
 from geopy.distance import vincenty
 import pulp
-#import gsv_3images
-#import caffe_3images
-#import caffe_gsv_3images
 
-
-'''
-Reads from a file of classified road coordinates and creates a list of only coordinates
-with the given scenery classification.
-'''
-def read_classified_points(file_name, scenery_type, start, end, time):
-    count = 0
-    classified_coord_list = []
-    
-    with open(file_name, 'r') as f:
-        input_lines = f.read().splitlines()
-    for x in input_lines:
-        new_line = x.replace("[", "")
-        new_line = new_line.replace("]", "")
-        new_line = new_line.replace('\'', "")
-        line_list = new_line.split(",")
-        if(line_list[2][1:] == scenery_type or line_list[4][1:] == scenery_type or line_list[6][1:]==scenery_type):
-            count += 1
-            coordinates = [float(line_list[0]), float(line_list[1])]
-            classified_coord_list.append(coordinates)
-    
-    #print("BEFORE: ", count)
-    #print("AFTER: ", len(classified_coord_list))
-    return classified_coord_list
-
-###### NEW HEURISTIC
-###### initialization
 
 
 '''
@@ -76,6 +46,7 @@ def closest_point(a, coordinates):
 
 '''
 finds the total length of the path created by a list of coordinates
+Approximately converts km into time
 '''
 def path_length(path):
     total_distance = 0;
@@ -118,8 +89,10 @@ def min_cost_coordinates(path, coordinates, max_length, end):
 if the coordinate can replace a coordinate in the path such that the path decreases in length,
 then the functions returns the optimal place to put the coordinate
 '''
-def min_location(coordinate, path, end):
-    distance_decrease = 0
+def min_location(coordinate, path, end, max_time):
+    path_time = path_length(path)
+    excess_time = max_time - path_time
+    distance_decrease = min(-int(excess_time/1.4), 0)
     min_place = -1
     for j in range(1, len(path)-1):
         current_distance = vincenty(path[j-1], path[j]).km
@@ -159,28 +132,34 @@ def create_paths(start, end, farthest_points, max_length, r_coordinates):
         list_of_paths.append(path)
     return list_of_paths
 
+'''
+Calculates the distance of a path created by three points
+'''
 def distance_between(start, end, point):
     leg_one = vincenty(start, point).km
     leg_two = vincenty(point, end).km
     total_distance = leg_one + leg_two
     return total_distance
 
-###### two point exchange
 
-#AHHHHHHHHHHHHHHHHHHHHHHHhh
-
-def two_point_exchange(op, nop, coordinates, end):
+'''
+Performs two point exchange
+Points from op are moved to paths in nop and a point from a path in nop
+is moved to op - this only occurs if making this movement decreases the
+length of op
+'''
+def two_point_exchange(op, nop, max_time, end):
     new_op = list(op)
     for j in range(1, len(op)-1):
         for k in range(0, len(nop)):
             for i in range(1, len(nop[k])-1):
-                op_index, op_improvement = min_location(nop[k][i], new_op, end)
+                op_index, op_improvement = min_location(nop[k][i], new_op, end, max_time)
                 if(op_index != -1):
                     best_nop = -1
                     nop_index = 0
                     best_improvement = 0
                     for x in range(0, len(nop)):
-                        nop_loc, nop_change = min_location(op[j], nop[x], end)
+                        nop_loc, nop_change = min_location(op[j], nop[x], end, max_time)
                         if(nop_loc != -1 and nop_change > best_improvement):
                             best_nop = x
                             nop_index = nop_loc
@@ -194,14 +173,18 @@ def two_point_exchange(op, nop, coordinates, end):
 
 
 
-###One point Movement
-#Probably wrong too
+'''
+Performs one point movement
+Points from paths in nop are removed from that path and added to op
+This only occurs if adding the point does not cause the path to exceed
+the time limit
+'''
 def one_point_movement(op, nop, max_length, end):
     for k in range(0, len(nop)):
         size = len(nop[k])-1
         i=1
         while(i < len(nop[k])-1):
-            op_index, op_improvement = min_location(nop[k][i], op, end)
+            op_index, op_improvement = min_location(nop[k][i], op, end, max_length)
             if(op_index != -1):
                 op.insert(op_index, nop[k][i])
                 changed_nop = list(nop[k])
@@ -213,13 +196,14 @@ def one_point_movement(op, nop, max_length, end):
     return op, nop   
     
 
-#reinitialization
 
-#find the k worst points in op then 
-
+'''
+Reinitialization
+For values k {1...K} remove k points from op, then rerun two point exchange
+and one point movement. If op improves then it is the new op.
+'''
 def reinitialization(op, nop, max_length, coordinates, end):
     k_value = int(min(10, .75*len(op)))
-    print("AT START of RE ", len(op))
     best_op = list(op)
     best_nop = list(nop)
     for k in range(1, k_value):
@@ -255,12 +239,18 @@ def remove_point(k, op):
             del op[index]
     return op
 
+'''
+Calls the different stages of the orienteering heuristic
+Performs initialization of the routes, then finds the op path, then
+repeatedly performs improvements to the route
+'''
 def orienteering_heuristic(start, end, coordinates, max_time):
     #initialization
     num_far_points = min(10, len(coordinates))
     farthest_points_list, r_coordinates= farthest_points(start, end, coordinates, num_far_points, max_time)
     paths = create_paths(start, end, farthest_points_list, max_time, r_coordinates)
     
+    #find the op path (the one with the most points)
     op_index = 0
     op_path = paths[0]
     len_op = len(op_path)
@@ -271,45 +261,27 @@ def orienteering_heuristic(start, end, coordinates, max_time):
     op_path = paths[op_index]
     del paths[op_index]
 
-    print("start improve ", len(op_path))
     #improvement round one
     op, nop = two_point_exchange(op_path, paths, max_time, end)
-    print("after 2 point ", len(op))
     op, nop = one_point_movement(op, nop, max_time, end)
     op, nop = reinitialization(op, nop, max_time, coordinates, end)
-    
-    print("len nop")
-    for x in nop:
-        print(len(x))
-        
+      
     ordered_op = order_route(end, op)
-#    print("improve 2")
-#    # #improvement round two
-#    op, nop = two_point_exchange(op, nop, max_time, end)
-#    op, nop = one_point_movement(op, nop, max_time, end)
-#    op, nop = reinitialization(op, nop, max_time, coordinates, end)
 
     return ordered_op
 
+'''
+Order the route by points that are farthest from the end point, to points
+that are closest to the end point
+'''
 def order_route(end, coordinates):
     ordered = sorted(coordinates, key = lambda coord: distance_to_end(coord, end), reverse = True)
     
     return ordered
 
+'''
+calculate the distance between two points
+'''
 def distance_to_end(item, end):
     return vincenty(item, end).km
-def check(op, nop):
-    for i in range(1, len(op)-1):
-        for p in nop:
-            if op[i] in p:
-                print("NO!")
 
-
-
-
-
-#start = [47.638134, -122.304230]
-#end =  [47.951772, -124.384314]
-#max_distance = 250
-#coord_list = read_classified_points("all_classified_points.csv", 'water', start, end, max_distance)
-#print(orienteering_heuristic(start, end, coord_list, max_distance))

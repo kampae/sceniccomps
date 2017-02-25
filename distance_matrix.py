@@ -2,7 +2,6 @@ import sys
 import simplejson
 from urllib2 import urlopen
 #from urllib.request import urlopen
-#from urllib2 import urlopen
 import os
 from geopy.distance import vincenty
 import pulp
@@ -15,7 +14,8 @@ import new_heuristic
 
 '''
 Uses google maps distance API to calculate the road distances between points in coordinates. Only includes distances between
-two points a and b in matrix if moving from a to b moves closer to the endpoint. NOT BEING USED CURRENTLY
+two points a and b in matrix if moving from a to b moves closer to the endpoint. 
+NOT BEING USED ANYMORE
 '''
 def get_distances(coordinates, final, matrix):
     api_key = 'AIzaSyBpaOfrcYIpU-7jb-M4zOAyHgBpzoPEoqg'
@@ -37,7 +37,7 @@ def get_distances(coordinates, final, matrix):
                     destination_list.append(j)
         destinations = destinations[:-1]
         
-        #REMEMBER limited to destination list of less than 100
+        #destination list must be limited to less than 100
         if len(destinations) > 0:
             urlstring = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=' + start + '&destinations=' + destinations + '&mode=driving&key=' + api_key
             result = simplejson.load(urlopen(urlstring))
@@ -83,8 +83,12 @@ def get_crow_distance_matrix(coordinates, final, matrix):
                     
     return matrix, names_list
 
+'''
+Given a distance threshold it combines points that are within that distance from each other.
+It returns a list of coordinates, where only one coordinate from each cluster is included,
+and a dictionary of clusters
+'''
 def cluster_coordinates(coordinates, threshold):
-    #threshold = 15
     clusters = {}
     reduced_coordinates = []
     in_cluster = []
@@ -154,6 +158,8 @@ def coord_in_range(coord, corners):
     min_y = min(y)
     max_y = max(y)
 
+    #checks if the point is within the relevant square of area, 
+    #and makes sure the point is not in Canada
     outside_square = coord[0] < min_x or coord[0] > max_x or coord[1] < min_y or coord[1] > max_y
     in_top_canada = (coord[0] > 48.395038) and (coord[1] < -123.149298)
     in_bottom_canada = (coord[0] > 48.303611) and (coord[1] > -124.001312) and (coord[1] < -123.471909)
@@ -202,14 +208,15 @@ def route_ilp(dist, coord_names, max_dist, clusters):
         if(y[t].value() == 1):
             edge_list.append(t)
             time_sum = time_sum + dist[t]
-    print(time_sum, "!!!!!!!*******")
     
     return edge_list
 
 
 '''
 Takes the subset of coordinates produced by the ILP and returns them in the order
-in which they will be visited.
+in which they will be visited, with clustered points added back into the path. 
+If the path exceeds the time limit, it continuously removes the points until the route
+fits the time constraint
 '''
 def order_output(output_list, start, end, clusters, time):
     if(len(output_list) <2):
@@ -243,7 +250,6 @@ def order_output(output_list, start, end, clusters, time):
     coord_list[0] = float(coord_list[0])
     coord_list[1] = float(coord_list[1])
     ordered_output.append(coord_list)
-    print("@@@@@@@@@@@@@@@", len(ordered_output))
     
     output_list = []
     for coordinates in ordered_output:
@@ -254,11 +260,19 @@ def order_output(output_list, start, end, clusters, time):
     
     return reduced_output_list
 
-
+'''
+Returns the list of cluster coordinates in order from
+farthest to the end point to closest to the end
+'''
 def order_clusters(cluster, end):
     ordered = sorted(cluster, key = lambda coord: calc_distance(coord, end), reverse = True)
     return ordered
 
+'''
+Removes points from the path until is fits within the max time.
+The highest cost point (the point that adds the most time to the route)
+is removed at each iteration
+'''
 def reduce_path(path, max_time):
     path_time = new_heuristic.path_length(path)
     while(path_time > max_time):
@@ -267,6 +281,9 @@ def reduce_path(path, max_time):
         path_time = new_heuristic.path_length(path)
     return path
 
+'''
+Calculates the distance between two coordinates given as strings
+'''
 def calc_distance(item, end):
     coord = item.split(", ")
     coord[0] = float(coord[0])
@@ -277,17 +294,12 @@ def calc_distance(item, end):
     return vincenty(coord, end_list).km
 
 
-
-def calc_distance(item, end):
-    coord = item.split(", ")
-    coord[0] = float(coord[0])
-    coord[1] = float(coord[1])
-    end_list = end.split(", ")
-    end_list[0] = float(end_list[0])
-    end_list[1] = float(end_list[1])
-    return vincenty(coord, end_list).km
-
-
+'''
+Calls the new heuristic for the orienteering problem 
+("A Fast and Effective Heuristic for the Orienteering Problem", Chao et al.)
+Given a start and end address, scenery preference and time given in hours and minutes
+it returns a route that fits those constraints. 
+'''
 def call_new_heuristic(start, end, scenery, hours, minutes):
     api_key = 'AIzaSyDwkDK5bzGkwnkUz_0HtSs6Ab6NYq83-zQ'
     urlstring1 = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + start + "&key=" +api_key
@@ -354,7 +366,6 @@ def get_waypoints(start, end, scenery, hours, minutes):
     
     print("!!^!!!!", len(reduced_coordinates))
         
-    w, h = len(coordinates), len(coordinates)
     distances = {}
     dist_dictionary, names_list = get_crow_distance_matrix(reduced_coordinates, end_coordinate, distances)
     
@@ -364,15 +375,10 @@ def get_waypoints(start, end, scenery, hours, minutes):
             clusters[lat_lng] = []
     
     output_list = route_ilp(dist_dictionary, names_list, time, clusters)
-    print(output_list)
     string_start = str(start_coordinate[0]) + ", " + str(start_coordinate[1])
     string_end = str(end_coordinate[0]) + ", " + str(end_coordinate[1])
     print(string_start, string_end)
     list_of_points = order_output(output_list, string_start, string_end, clusters, time)
     print(len(list_of_points), "************")
-
-    
-#    print(min(dist_dictionary.values()))
-#    print(max(dist_dictionary.values()))
     
     return list_of_points

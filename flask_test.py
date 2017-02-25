@@ -14,19 +14,16 @@ GoogleMaps(app, key='AIzaSyAZzeHhs-8JZ7i18MjFuM35dJHq70n3Hx4')
 
 @app.route("/")
 def get_main_page():
-    #return flask.render_template('ScenicComps.html')
     return flask.render_template('ScenicTiles.html', badInput=0, start="", end="", hours=0, minutes=0, scenicChoice="Select Scenery")
 
-
+#is this being used?
 @app.route("/<inputs>/")
 def second_page(inputs):
     return json.dumps(inputs)
 
-@app.route("/route/")    #<start>/<end>/<time>/<scenery>/")
-def route_display(): #(start, end, time, scenery):
-    # code here to generate route
-    # pass coordinates to route.js 
-#    if request.method == 'GET':
+#is this being used?
+@app.route("/route/")    
+def route_display():
     return flask.render_template('route.html')
 
 @app.route('/view_map', methods=['POST'])
@@ -39,8 +36,7 @@ def view_map():
     
     startpoint_url = startpoint.replace(" ", "+")
     endpoint_url = endpoint.replace(" ", "+")
-#    scenery_caps = scenery[0].upper() + scenery[1:]
-#    print(scenery_caps)
+
     
     # This code calls check_user_input module and makes sure time given is at least as much as it takes
         # to get from start to end directly
@@ -57,9 +53,9 @@ def view_map():
     if not time_valid:
         return flask.render_template('ScenicTiles.html', badInput=3, start=startpoint, end=endpoint, hours=hours, minutes=minutes, scenicChoice=scenery)
     
-    waypoints = distance_matrix.get_waypoints(startpoint_url, endpoint_url, scenery, hours, minutes)
+#    waypoints = distance_matrix.get_waypoints(startpoint_url, endpoint_url, scenery, hours, minutes)
 
-    #    waypoints = distance_matrix.call_new_heuristic(startpoint_url, endpoint_url, scenery, hours, minutes)
+    waypoints = distance_matrix.call_new_heuristic(startpoint_url, endpoint_url, scenery, hours, minutes) #second heuristic
     print("WAYPOINTS: ", waypoints)
     return flask.render_template('route.html', waypoints = waypoints)
 #    
