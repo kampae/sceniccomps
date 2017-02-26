@@ -190,7 +190,6 @@ function initializeStreetView(coords) {
 //creates the home button which returns the user to the start page
 function onHomeButton()
 {
-    var url = 'http://localhost:8000/';
     window.location.href="http://localhost:8000/";
 }
 

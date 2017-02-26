@@ -15,10 +15,10 @@ def get_streetview(coords):
     for i in range(0, 3):
         heading = str(120 * i)
         urlstring = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + coords[0].replace(" ", "") + '&fov=120&heading=' + heading + '&key=' + api_key   
-        file_name = "NewPic" + str(i) + ".jpg"
+        file_name = "passPic" + str(i) + ".jpg"
         image = urllib.urlretrieve(urlstring, file_name)
         all_images.append(file_name)
         
     return all_images
 
-get_streetview(["46.731633, -124.058961"])
+get_streetview(["48.405773, -122.644549"])
