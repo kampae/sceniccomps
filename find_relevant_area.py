@@ -12,7 +12,6 @@ Main function: take start and end points and max time willing to travel as input
 def find_relevant_area(points, max_time):
     
     max_time = max_time/60.0;
-    print("MAX TIME: ", max_time)
     # Initializes values needed for the start/end points
     start_point = points[0]
     end_point = points[1]
@@ -30,12 +29,10 @@ def find_relevant_area(points, max_time):
     # Converts max time to max distance using the assumption time is communicated in mins and
         # you will not be traveling greater than 55mph on average
     max_dist = 55.0/60 * max_time #((max_time - 6.0824)/1.4)*60.0
-    print("Max distance in find relevant: ", max_dist)
     #55.0/60 * max_time
     
     # Finds the distance between the start and end points
     dist_between_points = find_dist_between_pts(start_point, end_point)
-    print("start to end distance ", dist_between_points)
     
     # Finds the slope of the line between the start and end points, and the slope perpendicular to that
     if (By - Ay) == 0:
@@ -66,6 +63,33 @@ def find_relevant_area(points, max_time):
     
     # Series of conditionals to make sure we add and subtract the differences at the right times
         # to get our corners
+        
+    if Ax < Bx and Ay < By:
+        bottom_left = (Ax - hdiff - perp_hdiff, Ay - vdiff + perp_vdiff)
+        top_right = (Bx + hdiff + perp_hdiff, By + vdiff - perp_vdiff)
+        bottom_right = (Ax - hdiff + perp_hdiff, Ay - vdiff - perp_vdiff)
+        top_left = (Bx + hdiff - perp_hdiff, By + vdiff + perp_vdiff)
+        
+    elif Ax < Bx and Ay > By:
+        bottom_left = (Bx + hdiff - perp_hdiff, By - vdiff - perp_vdiff)
+        top_right = (Ax - hdiff + perp_hdiff, Ay + vdiff + perp_vdiff)
+        bottom_right = (Bx + hdiff + perp_hdiff, By - vdiff + perp_vdiff)
+        top_left = (Ax - hdiff - perp_hdiff, Ay + vdiff - perp_vdiff)
+        
+    elif Ax > Bx and Ay < By:
+        bottom_left = (Ax + hdiff - perp_hdiff, Ay - vdiff - perp_vdiff)
+        top_right = (Bx - hdiff + perp_hdiff, By + vdiff + perp_vdiff)
+        bottom_right = (Ax + hdiff + perp_hdiff, Ay - vdiff + perp_vdiff)
+        top_left = (Bx - hdiff - perp_hdiff, By + vdiff - perp_vdiff)
+        
+    else:
+        bottom_left = (Bx - hdiff - perp_hdiff, By - vdiff + perp_vdiff)
+        top_right = (Ax + hdiff + perp_hdiff, Ay + vdiff - perp_vdiff)
+        bottom_right = (Bx - hdiff + perp_hdiff, By - vdiff - perp_vdiff)
+        top_left = (Ax + hdiff - perp_hdiff, Ay + vdiff + perp_vdiff)
+        
+        
+        '''
     if Ax < Bx and Ay < By:
         bottom_left = (Ax - hdiff, Ay - vdiff)
         top_right = (Bx + hdiff, By + vdiff)
@@ -89,9 +113,9 @@ def find_relevant_area(points, max_time):
         top_right = (Ax + hdiff, Ay + vdiff)
         bottom_right = (Cx + perp_hdiff, Cy - perp_vdiff)
         top_left = (Cx - perp_hdiff, Cy + perp_vdiff)
+        '''
         
     corners = [bottom_left, bottom_right, top_right, top_left]
-    print("CORNERS: ", corners)
     return corners
     
 '''
