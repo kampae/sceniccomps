@@ -6,8 +6,9 @@ var renderArray = [];
 var time = 0;
 
 
-//initMap({{ waypoints|tojson }})
-
+//initialize the map with the start and end point, and centered at the start
+//set up the route information box
+//begin breaking up the waypoints as needed
 function initMap() 
 {
     var waypointString = document.getElementById("myVar").value;
@@ -18,12 +19,10 @@ function initMap()
     document.getElementById('routedeets').innerHTML = "" 
     document.getElementById('routedeets').innerHTML += "We found " + waypoints.length + " scenic points on your route!" + "<br />";
     
-//    var wy = waypointString.substring(1, waypointString.length-2);
-//    var waypoints = wy.split(",");
     directionsService = new google.maps.DirectionsService();
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
-      center: {lat: 47.607140, lng: -120.292142}
+      center: {lat: waypoints[0][0], lng: waypoints[0][1]}
     });
     
     splitRoute(waypoints);
@@ -43,54 +42,9 @@ function initMap()
         label: 'B'
     });
     
-    // Drag Code Start
-//    var i = 0;
-//    var dragging = false;
-//        $('#dragbar').mousedown(function(e){
-//            e.preventDefault();
-//       
-//            dragging = true;
-//            var pano = $('#pano');
-//            var dragbar = $("#dragbar");
-//            var ghostbar = $('<div>',
-//                            {id:'ghostbar',
-//                            css: {
-//                                height: dragbar.outerHeight(),
-//                                width: dragbar.outerWidth(),
-//                                top: pano.offset().top,
-//                                bottom: pano.offset().bottom
-//                                }
-//                            }).appendTo('body');
-//       
-//            $(document).mousemove(function(e){
-//                ghostbar.css("top",e.pageY+2);
-//            });
-//        });
-//
-//        $(document).mouseup(function(e){
-//        if (dragging) 
-//        {
-//           $('#map').css("height",e.pageY+2);
-//           $('#pano').css("top",e.pageY+2);
-//           $('#ghostbar').remove();
-//           $(document).unbind('mousemove');
-//           dragging = false;
-//        }
-//    });
-    
-    // Drag Code End
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
+//breaks up the waypoints into 25 point segments
 function splitRoute(waypoints) 
 {
     if (waypoints.length <= 25) 
@@ -117,6 +71,7 @@ function splitRoute(waypoints)
     }
 }
 
+//creates a route for each segment of waypoints
 function generateRouteSections() 
 {
     requestArray = [];
@@ -153,6 +108,9 @@ function generateRouteSections()
     processRequests();
 }
 
+//ensures that the route is created in order
+//manages the asynchronicity
+//creates the directions renders for each route and sets the map options
 function processRequests()
 {
     var i = 0;
@@ -176,9 +134,7 @@ function processRequests()
                     strokeColor: 'purple'
                 }}
             });
-            
-            //renderArray[i] = new google.maps.DirectionsRenderer();
-            
+                        
             for (var j = 0; j < result["routes"][0]["legs"].length; j++)
             {
                 time += result["routes"][0]["legs"][j]["duration"]["value"];
@@ -214,16 +170,12 @@ function processRequests()
     var seconds = time%60;
     
     document.getElementById('routedeets').innerHTML += "<br />" + "The total length of your trip is " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds."; 
-    
-//    map.setCenter(requestArray[0][0]);
+        
 }
 
+//initializes the street view pano which is displayed at the bottom of the screen
 function initializeStreetView(coords) {
     var startpt = {lat: coords[0], lng: coords[1]};
-//    var map = new google.maps.Map(document.getElementById('map'), {
-//        center: fenway,
-//        zoom: 14
-//    });
     var panorama = new google.maps.StreetViewPanorama(
         document.getElementById('pano'), {
             position: startpt,
@@ -235,15 +187,9 @@ function initializeStreetView(coords) {
     map.setStreetView(panorama);
 }
 
+//creates the home button which returns the user to the start page
 function onHomeButton()
 {
-    //var inputs = getInputs();
-    //var url = 'http://localhost:5000/';
     window.location.href="http://localhost:8000/";
-    
-//    xmlHttpRequest = new XMLHttpRequest();
-//    xmlHttpRequest.open('get', url);
-//    
-//    xmlHttpRequest.send(null);
 }
 
